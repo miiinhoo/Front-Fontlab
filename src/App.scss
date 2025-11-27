@@ -11,8 +11,9 @@ a{
 }
 li{list-style: none;}
 #root {
-  width: 100vw;
+  width: 100%;
   text-align: center;
+  overflow-x: hidden;
 }
 
 header{
@@ -45,6 +46,7 @@ header{
       gap: 1rem;
       font-family: var(--mainfont);
       font-size: 1.5rem;
+      letter-spacing: -0.07rem;
     }
   }
 }
