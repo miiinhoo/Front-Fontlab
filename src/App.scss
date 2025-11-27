@@ -50,3 +50,22 @@ header{
     }
   }
 }
+
+
+.pagination{
+  border: none;
+  border-radius: 7px;
+  font-size: 22px;
+  font-family: var(--mainfont);
+  padding: 0.2rem;
+}
+.pagination.active{
+  background-color: black;
+  color: white;
+}
+.arrow{
+  border: none;
+  font-size: 22px;
+  font-family: var(--mainfont);
+  padding: 0.2rem;
+}
