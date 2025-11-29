@@ -2,11 +2,12 @@ import { useEffect, useState, type JSX } from "react";
 import useGoogleFonts from "../hooks/useGoogleFonts";
 import FontCard from "../components/FontCard";
 import useCustomhook from "../hooks/useCustomhook";
+import { createFont } from "../api/fontsService";
 
 export default function ExplorePage(): JSX.Element {
   // 훅으로 필터된 폰트 가져오기
   const { fonts, search, setSearch, category, setCategory } = useGoogleFonts();
-  const { handleChange, temp } = useCustomhook();
+  const { navigate,handleChange, temp } = useCustomhook();
   // 페이지 상태
   const [page, setPage] = useState<number>(1);
   const PER_PAGE = 50;
@@ -37,17 +38,31 @@ export default function ExplorePage(): JSX.Element {
   const end = start + PER_PAGE;
   const pageFonts = fonts.slice(start, end);
 
-  // 확인
-  useEffect(() => {
-    console.log("temp > " , temp)
-  },[temp])
+  const handleSelect = async (font: any) => {
+  const res = await createFont({
+    family: font.family,
+    text: "",
+    size: 32,
+    weight: 400,
+    italic: false,
+    spacing: 0,
+    height: 1.5,
+    createdAt: Date.now(),
+  });
+
+  // 저장 성공 → settings로 이동
+  navigate(`/playground/settings/${res.id}`);
+  };
   return (
     <div className="page-inner">
       {/* 상단 검색 + 카테고리 */}
       <div className="top-box">
         <p className="left-box">
           <input type="text" 
-          onChange={(e) => handleChange(e)}/>
+          onChange={(e) => handleChange(e)}
+          value={temp}
+          placeholder="글자를 입력해보세요.."
+          />
         </p>
 
         <p className="right-box">
@@ -75,7 +90,7 @@ export default function ExplorePage(): JSX.Element {
       {/* 폰트 카드 그리드 */}
       <div className="font-grid">
         {pageFonts.map((font) => (
-          <FontCard key={font.family} font={font} temp={temp}/>
+          <FontCard key={font.family} font={font} temp={temp} click={()=>handleSelect(font)}/>
         ))}
       </div>
 

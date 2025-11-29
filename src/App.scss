@@ -4,6 +4,12 @@
 }
 :root{
   --mainfont:"Noto Sans", sans-serif;
+
+  --lightgray:rgb(224, 224, 224);
+  --solidgray:gray;
+  --black:#000;
+  --subColor:#333;
+  --subColor2:#555;
 }
 a{
   color: inherit;
@@ -54,16 +60,50 @@ header{
 .page-inner{
   width: 95%;
   margin: 0 auto;
+  .top-box{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    .left-box,.right-box{
+      input{
+        font-size: 3rem;
+        text-indent: 18px;
+        border: 1px solid;
+        border-radius: 15px;
+      }
+    } 
+    .right-box{
+      display: flex;
+      align-items: center;
+    }
+    .right-box > input,select{
+      font-size: 2rem;
+      border: 1px solid;
+      border-radius: 8px;
+      margin-left: 1rem;
+      option{
+        font-size: 1.5rem;
+      }
+    }
+    
+  }
   .font-grid{
     display: flex;
     flex-wrap: wrap;
     width: 100%;
     font-family: var(--mainfont);
     .font-card{
+      cursor: pointer;
       box-sizing: border-box;
       width: calc(100% / 5);
       height: 300px;
       border: 1px solid;
+      padding: 0.7rem;
+      transition: all 0.3s 0s linear;
+      &.active{
+        color: white;
+        background-color: black;
+      }
       .font-title{
         text-align-last: left;
         text-indent: 1rem;
@@ -78,12 +118,25 @@ header{
   }
 }
 
+footer{
+  width: 100%;
+  height: 20vh;
+}
 .pagination{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
   border: none;
   border-radius: 7px;
   font-size: 22px;
   font-family: var(--mainfont);
   padding: 0.2rem;
+  button{
+    width:30px;
+    background-color: var(--lightgray);
+    cursor: pointer;
+  }
 }
 .pagination.active{
   background-color: black;
