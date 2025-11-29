@@ -51,6 +51,32 @@ header{
   }
 }
 
+.page-inner{
+  width: 95%;
+  margin: 0 auto;
+  .font-grid{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    font-family: var(--mainfont);
+    .font-card{
+      box-sizing: border-box;
+      width: calc(100% / 5);
+      height: 300px;
+      border: 1px solid;
+      .font-title{
+        text-align-last: left;
+        text-indent: 1rem;
+      }
+      .fonts{
+        text-align: left;
+        font-size: 4rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
 
 .pagination{
   border: none;

@@ -1,11 +1,12 @@
 import { useEffect, useState, type JSX } from "react";
 import useGoogleFonts from "../hooks/useGoogleFonts";
 import FontCard from "../components/FontCard";
+import useCustomhook from "../hooks/useCustomhook";
 
 export default function ExplorePage(): JSX.Element {
   // 훅으로 필터된 폰트 가져오기
   const { fonts, search, setSearch, category, setCategory } = useGoogleFonts();
-
+  const { handleChange, temp } = useCustomhook();
   // 페이지 상태
   const [page, setPage] = useState<number>(1);
   const PER_PAGE = 50;
@@ -36,33 +37,45 @@ export default function ExplorePage(): JSX.Element {
   const end = start + PER_PAGE;
   const pageFonts = fonts.slice(start, end);
 
+  // 확인
+  useEffect(() => {
+    console.log("temp > " , temp)
+  },[temp])
   return (
-    <>
+    <div className="page-inner">
       {/* 상단 검색 + 카테고리 */}
       <div className="top-box">
-        <input
+        <p className="left-box">
+          <input type="text" 
+          onChange={(e) => handleChange(e)}/>
+        </p>
+
+        <p className="right-box">
+          <input
           placeholder="폰트 검색"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-        />
+          />
 
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="all">전체</option>
-          <option value="sans-serif">고딕체</option>
-          <option value="serif">명조체</option>
-          <option value="display">디스플레이</option>
-          <option value="handwriting">손글씨</option>
-          <option value="monospace">고정폭</option>
-        </select>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="all">전체</option>
+            <option value="sans-serif">고딕체</option>
+            <option value="serif">명조체</option>
+            <option value="display">디스플레이</option>
+            <option value="handwriting">손글씨</option>
+            <option value="monospace">고정폭</option>
+          </select>
+        </p>
+        
       </div>
 
       {/* 폰트 카드 그리드 */}
       <div className="font-grid">
         {pageFonts.map((font) => (
-          <FontCard key={font.family} font={font} />
+          <FontCard key={font.family} font={font} temp={temp}/>
         ))}
       </div>
 
@@ -99,6 +112,6 @@ export default function ExplorePage(): JSX.Element {
         )}
 
       </div>
-    </>
+    </div>
   );
 }
