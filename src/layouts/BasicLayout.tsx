@@ -13,7 +13,7 @@ export default function BasicLayout():JSX.Element{
                 <Outlet/>
             </main>
             <footer>
-
+                푸터
             </footer>
         </>
     )
