@@ -1,8 +1,8 @@
 import { useEffect, useState, type JSX } from "react";
-import useGoogleFonts from "../hooks/useGoogleFonts";
-import FontCard from "../components/FontCard";
-import useCustomhook from "../hooks/useCustomhook";
-import { createFont } from "../api/fontsService";
+import useGoogleFonts from "../../hooks/useGoogleFonts";
+import FontCard from "../../components/FontCard";
+import useCustomhook from "../../hooks/useCustomhook";
+import { createFont } from "../../api/fontsService";
 
 export default function ExplorePage(): JSX.Element {
   // 훅으로 필터된 폰트 가져오기

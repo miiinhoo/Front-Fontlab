@@ -9,10 +9,13 @@ type Props = {
 }
 
 export default function FontCard({ font,temp,click }:Props) {
+  
   const { bool , setBool } = useCustomhook();
+
   useEffect(() => {
     loadFontOnce(font.family, ["400"]);
   }, [font.family]);
+
   return (
     <div className={"font-card" + (bool ? " active":"")} 
     onMouseEnter={() => setBool(true)}
