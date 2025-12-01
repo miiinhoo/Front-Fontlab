@@ -29,7 +29,7 @@ const root = createBrowserRouter([
                 element:<PlaygroundPage/>,
                 children:[
                     {
-                        path:"settings",
+                        path:"settings/:id",
                         element:<PlaygroundSettings/>
                     }
                 ]
