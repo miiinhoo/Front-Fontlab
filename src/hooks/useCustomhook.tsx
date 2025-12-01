@@ -45,13 +45,29 @@ export default function useCustomhook(){
     }
 
     // 유저페이지
+    const [userData, setUserData] = useState({
+      username: "",
+      userId: "",
+      password: "",
+      passwordcheck: "",
+    });
+    const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+
+      setUserData(prev => ({
+        ...prev,
+        [name]: value,
+      }));
+    };
     // 유저 로그인
     const handleLogin = async() => {
       try{
         await login(tempA, tempB); // tempA: email tempB: pw로 지정..
         toast.success("로그인 성공.")
-      }catch(error){
-        toast.error(`로그인 실패 error code : ${error}`)
+      }catch(error:any){
+        if (error.code === "auth/user-not-found") toast.error("해당 이메일의 계정이 없습니다.");
+        else if (error.code === "auth/invalid-email") toast.error("해당 이메일의 계정이 없습니다.")
+        else if (error.code === "auth/wrong-password") toast.error("비밀번호가 잘못되었습니다.");
       }
     }
     // 유저 회원가입
@@ -83,6 +99,7 @@ export default function useCustomhook(){
       setTempA,
       setTempB,
       setTempC,
+      userData,
 
       // 이벤트 핸들러
       handleChange,
@@ -92,5 +109,6 @@ export default function useCustomhook(){
       // 유저 페이지 핸들러
       handleLogin,
       handleSignup,
+      handleUserChange
     }
 }
