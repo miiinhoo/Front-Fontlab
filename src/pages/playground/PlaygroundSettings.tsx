@@ -43,7 +43,7 @@ export default function PlaygroundSettings() {
   if (!item) return <div>Loading...</div>;
 
   return (
-    <section>
+    <>
       <div className="page-inner">
       <h2>{item.family}</h2>
 
@@ -147,6 +147,6 @@ export default function PlaygroundSettings() {
         <button onClick={() => navigate("/playground")}>목록</button>
       </div>
     </div>
-    </section>
+    </>
   );
 }
