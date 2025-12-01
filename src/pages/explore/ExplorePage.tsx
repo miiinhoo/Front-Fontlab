@@ -1,13 +1,13 @@
-import { useEffect, useState, type JSX } from "react";
+import { useState, type JSX } from "react";
 import useGoogleFonts from "../../hooks/useGoogleFonts";
 import FontCard from "../../components/FontCard";
 import useCustomhook from "../../hooks/useCustomhook";
-import { createFont } from "../../api/fontsService";
+import { createFont } from "../../api/FontsService";
 
 export default function ExplorePage(): JSX.Element {
   // 훅으로 필터된 폰트 가져오기
   const { fonts, search, setSearch, category, setCategory } = useGoogleFonts();
-  const { navigate,handleChange, temp } = useCustomhook();
+  const { navigate,handleChange, tempA } = useCustomhook();
   // 페이지 상태
   const [page, setPage] = useState<number>(1);
   const PER_PAGE = 50;
@@ -60,7 +60,7 @@ export default function ExplorePage(): JSX.Element {
         <p className="left-box">
           <input type="text" 
           onChange={(e) => handleChange(e)}
-          value={temp}
+          value={tempA}
           placeholder="글자를 입력해보세요.."
           />
         </p>
@@ -90,7 +90,7 @@ export default function ExplorePage(): JSX.Element {
       {/* 폰트 카드 그리드 */}
       <div className="font-grid">
         {pageFonts.map((font) => (
-          <FontCard key={font.family} font={font} temp={temp} click={()=>handleSelect(font)}/>
+          <FontCard key={font.family} font={font} tempA={tempA} click={()=>handleSelect(font)}/>
         ))}
       </div>
 

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import useCustomhook from "../../hooks/useCustomhook";
-import { getFonts } from "../../api/fontsService";
+import { getFonts } from "../../api/FontsService";
 import { useNavigate } from "react-router-dom";
 
 export default function PlaygroundList() {
@@ -16,17 +16,18 @@ export default function PlaygroundList() {
   }
 
   return (
-    <div className="pg-list">
+    <div className="page-inner">
+      <div className="font-grid">
       {item.map((font: any) => (
         <div
           key={font.id}
-          className="pg-card"
+          className="font-card"
           onClick={() => navigate(`/playground/settings/${font.id}`)}
         >
           <h3>{font.family}</h3>
 
           {/* 폰트 정보들 있으면 표시 */}
-          <div className="meta">
+          <div className="font">
             {font.size && <span>Size: {font.size}{font.sizeUnit}</span>}
             {font.weight && <span>Weight: {font.weight}</span>}
             {font.style && <span>Style: {font.style}</span>}
@@ -34,6 +35,7 @@ export default function PlaygroundList() {
           </div>
         </div>
       ))}
+    </div>
     </div>
   );
 }

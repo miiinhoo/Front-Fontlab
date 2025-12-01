@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import useCustomhook from "../../hooks/useCustomhook";
-import { getFont } from "../../api/fontsService";
+import { getFont } from "../../api/FontsService";
 import { loadFontOnce } from "../../utils/loadFontOnce";
 
 import useFontSettings from "../../hooks/useFontSettings";

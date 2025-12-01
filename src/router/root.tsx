@@ -1,6 +1,7 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 import BasicLayout from "../layouts/BasicLayout";
 import { lazy } from "react";
+import UserRouter from "./user/UserRouter";
 
 const MainPage = lazy(() => import("../pages/MainPage"));
 const ExplorePage = lazy(() => import("../pages/explore/ExplorePage"));
@@ -42,10 +43,15 @@ const root = createBrowserRouter([
                 element: <PlaygroundSettings />,
             },
             ],
-        },
+            },
             {
                 path:"library",
                 element:<LibraryPage/>,
+            },
+            {
+                path:"user",
+                element:<Outlet/>,
+                children: [...UserRouter],
             }
         ]
     }
