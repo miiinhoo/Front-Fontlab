@@ -1,6 +1,13 @@
-export const Nav = [
-    { id : 1, text : "HOME", path : "/" },
-    { id : 2, text : "EXPLORE", path : "explore" },
-    { id : 3, text : "PLAYGROUND", path : "playground" },
-    { id : 4, text : "LIBRARY", path : "library"}
-]
+export const NavLogout = [
+  { text: "EXPLORE", path: "/explore" },
+  { text: "PLAYGROUND", path: "/playground" },
+  { text: "LIBRARY", path: "/library" },
+  { text: "LOGIN", path: "/user/login" },
+];
+
+export const NavLogin = [
+  { text: "EXPLORE", path: "/explore" },
+  { text: "PLAYGROUND", path: "/playground" },
+  { text: "LIBRARY", path: "/library" },
+  { text: "MYPAGE", path: "/user/mypage" },
+];

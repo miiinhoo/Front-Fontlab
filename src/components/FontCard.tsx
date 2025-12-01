@@ -1,26 +1,31 @@
 import { useEffect } from "react";
 import { loadFontOnce } from "../utils/loadFontOnce";
 import useCustomhook from "../hooks/useCustomhook";
+import { auth } from "../firebase/firebase";
 
 type Props = {
     font: any,
-    temp: string,
+    tempA: string,
     click:()=>void,
 }
 
-export default function FontCard({ font,temp,click }:Props) {
+export default function FontCard({ font,tempA,click }:Props) {
   
-  const { bool , setBool } = useCustomhook();
+  const { navigate, bool , setBool } = useCustomhook();
 
   useEffect(() => {
-    loadFontOnce(font.family, ["400"]);
+    loadFontOnce(font.family);
+    //loadFontOnce(font.family, ["400"]);
   }, [font.family]);
 
   return (
     <div className={"font-card" + (bool ? " active":"")} 
     onMouseEnter={() => setBool(true)}
     onMouseLeave={() => setBool(false)}
-    onClick={click}
+    onClick={() => {
+      if(!auth.currentUser) return navigate("/user/login")
+      return click
+    }}
     >
       <div className="font-title">
         {font.family}
@@ -28,7 +33,7 @@ export default function FontCard({ font,temp,click }:Props) {
 
       <div style={{ fontFamily: font.family }}
       className="fonts">
-        {temp || "FontLab"}
+        {tempA || "FontLab"}
       </div>
     </div>
   )
