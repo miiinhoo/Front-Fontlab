@@ -24,7 +24,7 @@ export const getFonts = async () => {
 };
 
 
-export const getFont = async (id: string) => {
+export const getFont = async (id: any) => {
   const ref = doc(db, "savedFonts", id);
   const snapshot = await getDoc(ref);
   return { id, ...snapshot.data() };
