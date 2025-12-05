@@ -24,7 +24,7 @@ export default function FontCard({ font,tempA,click }:Props) {
     onMouseLeave={() => setBool(false)}
     onClick={() => {
       if(!auth.currentUser) return navigate("/user/login")
-      return click
+      click()
     }}
     >
       <div className="font-title">
