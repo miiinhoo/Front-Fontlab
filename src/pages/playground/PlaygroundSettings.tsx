@@ -9,7 +9,7 @@ import useFontSettings from "../../hooks/useFontSettings";
 import { SettingBlocks, unitRanges } from "../../arrays/SettingsConfig";
 
 export default function PlaygroundSettings() {
-  const { id, item, setItem, handleSave, handleDelete, navigate } = useCustomhook();
+  const { id, item, setItem, handleSave, handleDelete, navigate,handleChange } = useCustomhook();
   const { changeUnit, changeValue, getRange, changePreset } =
     useFontSettings(item, setItem);
 
@@ -68,7 +68,6 @@ export default function PlaygroundSettings() {
       {SettingBlocks.map((block) => {
         const key = block.key;
         const unit = item[key + "Unit"] || "px";
-        const range = getRange(key, unit);
 
         return (
           <div key={key} className="setting-block">
@@ -76,7 +75,7 @@ export default function PlaygroundSettings() {
               {block.label}: {item[key]}
               {block.unit ? unit : ""}
             </label>
-
+            
             {/* SLIDER */}
             {(block.type === "slider" || block.type === "slider-preset") && (
               <input
@@ -138,7 +137,14 @@ export default function PlaygroundSettings() {
           </div>
         );
       })}
+      <input 
+      type="text" 
+      placeholder="커스텀 네임을 작성하세요.."
+      name="customname"
+      value={item.customname || ""}
+      onChange={(e) => setItem({ ...item, customname: e.target.value })}
 
+      />
       <div className="btn-row">
         <button onClick={handleSave}>저장</button>
         <button onClick={handleDelete} className="danger">

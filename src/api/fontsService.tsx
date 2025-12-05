@@ -7,35 +7,44 @@ import {
   doc,
   updateDoc,
   deleteDoc,
+  orderBy,
+  query,
 } from "firebase/firestore";
 
-// 컬렉션 참조
-const col = collection(db, "savedFonts");
-
-
+// 생성
 export const createFont = async (data: any) => {
-  const docRef = await addDoc(col, data);
-  return { id: docRef.id, ...data };
+  const docRef = await addDoc(collection(db, "savedFonts"), {
+    ...data,
+    createdAt: Date.now(), //  정렬 기준
+  });
+  return { id: docRef.id };
 };
 
+// 최신순 정렬
 export const getFonts = async () => {
-  const res = await getDocs(col);
-  return res.docs.map((d) => ({ id: d.id, ...d.data() }));
+  const q = query(
+    collection(db, "savedFonts"),
+    orderBy("createdAt", "desc")
+  );
+
+  const snap = await getDocs(q);
+  return snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 };
 
-
-export const getFont = async (id: any) => {
+// 단일 조회
+export const getFont = async (id: string) => {
   const ref = doc(db, "savedFonts", id);
-  const snapshot = await getDoc(ref);
-  return { id, ...snapshot.data() };
+  const snap = await getDoc(ref);
+  return { id, ...snap.data() };
 };
 
+// 업데이트
 export const updateFont = async (id: string, data: any) => {
   const ref = doc(db, "savedFonts", id);
   await updateDoc(ref, data);
 };
 
-
+// 삭제
 export const deleteFont = async (id: string) => {
   const ref = doc(db, "savedFonts", id);
   await deleteDoc(ref);
