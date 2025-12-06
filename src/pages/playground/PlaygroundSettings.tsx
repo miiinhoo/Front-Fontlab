@@ -156,8 +156,10 @@ export default function PlaygroundSettings() {
       <div className="right-content">
       {/** 코드 복붙기능 */}
       <div className="codes">
+        <h3>CSS</h3>
+        <br />
         <p className="row">
-          <strong>font-size</strong>:<span>{item.size}</span><small>{item.sizeUnit}</small>;
+          <strong>font-size</strong>:<span className="lightgreen">{item.size}{item.sizeUnit}</span>;
         </p>
         <p className="row">
           <strong>font-weight</strong>:<span>{item.weight}</span>;
@@ -166,8 +168,9 @@ export default function PlaygroundSettings() {
           <strong>font-style</strong>:<span>{item.style}</span>;
         </p>
         <p className="row">
-          <strong>letter-spacing</strong>:<span>{item.spacing}</span><small>{item.spacingUnit}</small>;
+          <strong>letter-spacing</strong>:<span className="lightgreen">{item.spacing}{item.spacingUnit}</span>;
         </p> 
+        <br />
         <ButtonComponent 
           text="코드 복사"
           event={() => {

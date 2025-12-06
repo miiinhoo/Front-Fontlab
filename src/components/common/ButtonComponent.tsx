@@ -14,6 +14,7 @@ export default function ButtonComponent({text,cln,types,event}:Props):JSX.Elemen
             <button
             className={cln}
             onClick={event}
+            style={{ cursor: "pointer"}}
             type={types || "button"}
             >
                 {text}
