@@ -43,7 +43,8 @@ export default function useCustomhook(){
         toast.error(`삭제에 실패했습니다.${error}`);
       };
     }
-
+    
+    
     // 유저페이지
     const [userData, setUserData] = useState({
       username: "",
@@ -51,6 +52,7 @@ export default function useCustomhook(){
       password: "",
       passwordcheck: "",
     });
+
     const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
 

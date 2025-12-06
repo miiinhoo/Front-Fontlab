@@ -1,7 +1,7 @@
 import type { JSX } from "react";
 import { UserArray } from "../../arrays/UserArrays";
 import useCustomhook from "../../hooks/useCustomhook";
-import ButtonComponent from "../../components/ButtonComponent";
+import ButtonComponent from "../../components/common/ButtonComponent";
 
 export default function UserLogin():JSX.Element{
     const { navigate,userData, handleUserChange, handleLogin } = useCustomhook();

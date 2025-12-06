@@ -1,4 +1,5 @@
 import type { JSX } from "react";
+import './Button.scss';
 
 type Props = {
     text: string,

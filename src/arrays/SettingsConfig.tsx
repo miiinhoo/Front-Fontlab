@@ -14,11 +14,17 @@ export const defaultUnitValue = {
 export const unitRanges = {
   size: {
     px: { min: 1, max: 120, step: 1 },
-    rem: { min: 0.001, max: 13, step: 0.001 },
-    em: { min: 0.001, max: 13, step: 0.001 },
+    rem: { min: 1, max: 12, step: 0.01 },
+    em: { min: 1, max: 12, step: 0.01 },
   },
   weight: {
     min: 100,max:900, step:100
+  },
+  style:{},
+  spacing: {
+    px: { min: -10, max: 50, step: 0.1 },
+    rem: { min: -1, max: 5, step: 0.01 },
+    em: { min: -1, max: 5, step: 0.01 }
   }
 };
 
@@ -33,8 +39,6 @@ export const weightPresets = [
 export const fontStyles = [
   { label: "Normal", value: "normal" },
   { label: "Italic", value: "italic" },
-  { label: "Oblique", value: "oblique" },
-  { label: "Small Caps", value: "small-caps" },
 ];
 
 // 최종 UI 구조
@@ -50,7 +54,7 @@ export const SettingBlocks = [
     label: "Font Weight",
     type: "slider-preset",  // 슬라이더 + preset
     presets: weightPresets,
-    range: { min: 100, max: 900, step: 100 }, // 범위값 100~900까지 100씩 증/감
+    range: { min: 100, max: 900, step: 50 }, // 범위값 100~900까지 100씩 증/감
   },
   {
     key: "style",
