@@ -4,4 +4,22 @@ button{
     border: 1px solid;
     border-radius: 5px;
     padding: 5px 15px;
+    &.copybtn{
+        padding-left: 6%;
+        position: absolute;
+        top:5px;right: 0;
+        background-color: unset;
+        color: whitesmoke;
+        border: none;
+        &::after{
+            content: "";
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: url(../../imgs/copybtn.svg) center center no-repeat;
+            background-size: 15px 15px;
+            position: absolute;
+            top:8px; left:6px;
+        }
+    }
 }
