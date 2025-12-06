@@ -20,12 +20,14 @@ export default function useGoogleFonts() {
       });
   }, []);
 
-  // 필터 적용
+  // Explore페이지 font name 기준 검색 필터
   const filteredFonts = fonts
     .filter((f) =>
       f.family.toLowerCase().includes(search.toLowerCase())
     )
     .filter((f) => category === "all" || f.category === category);
+
+  
 
   return {
     loading,
@@ -34,5 +36,6 @@ export default function useGoogleFonts() {
     setSearch,
     category,
     setCategory,
+    
   };
 }
