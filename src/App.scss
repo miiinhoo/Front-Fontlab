@@ -96,11 +96,16 @@ section{
     flex-wrap: wrap;
     width: 100%;
     font-family: var(--mainfont);
+    .font-cardwrap{
+      width: calc(100% / 5);
+      height: 300px;
+      position: relative;
+    }
     .font-card{
       cursor: pointer;
       box-sizing: border-box;
-      width: calc(100% / 5);
-      height: 300px;
+      width: 100%;
+      height: 100%;
       border: 1px solid;
       padding: 0.7rem;
       transition: all 0.3s 0s linear;

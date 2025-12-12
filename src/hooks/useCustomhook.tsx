@@ -48,9 +48,9 @@ export default function useCustomhook(){
     // 유저페이지
     const [userData, setUserData] = useState({
       username: "",
-      userId: "",
+      email: "",
       password: "",
-      passwordcheck: "",
+      passwordCheck: "",
     });
 
     const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,9 +63,11 @@ export default function useCustomhook(){
     };
     // 유저 로그인
     const handleLogin = async() => {
+      const { email, password } = userData;
       try{
-        await login(tempA, tempB); // tempA: email tempB: pw로 지정..
-        toast.success("로그인 성공.")
+        await login(email, password); // tempA: email tempB: pw로 지정..
+        toast.success("로그인 성공.");
+        navigate("/");
       }catch(error:any){
         if (error.code === "auth/user-not-found") toast.error("해당 이메일의 계정이 없습니다.");
         else if (error.code === "auth/invalid-email") toast.error("해당 이메일의 계정이 없습니다.")
@@ -74,11 +76,26 @@ export default function useCustomhook(){
     }
     // 유저 회원가입
     const handleSignup = async () => {
+      const { email, password, passwordCheck, username } = userData;
+      
+    if (!email || !password || !username) {
+      toast.error("모든 항목을 입력해주세요.");
+      return;
+    }
+
+    if (password !== passwordCheck) {
+      toast.error("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
     try {
-      await signup(tempA, tempB, tempC); // tempA: email tempB: pw tempC: username
+      await signup(email, password, username); // tempA: email tempB: pw tempC: username
       toast.success("회원가입 성공!");
+      navigate("/user/login");
     } catch (err: any) {
-      toast.error(err.code);
+      if (err.code === "auth/invalid-email") toast.error("이메일 형식이 올바르지 않습니다.");
+      else if (err.code === "auth/email-already-in-use") toast.error("이미 사용 중인 이메일입니다.");
+      else toast.error("회원가입 실패");
     }
     };
 
