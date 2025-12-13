@@ -4,6 +4,8 @@ import { getFonts } from "../../api/FontsService";
 import { useNavigate } from "react-router-dom";
 import useGoogleFonts from "../../hooks/useGoogleFonts";
 import SelectComponent from "../../components/SelectComponent";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase/firebase";
 
 export default function PlaygroundList() {
   const { item, setItem } = useCustomhook();
@@ -11,12 +13,20 @@ export default function PlaygroundList() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getFonts().then((res) => setItem(res));
+    const font = onAuthStateChanged(auth, async(user) => {
+      if(!user) {
+        setItem([]); // 로그인 안된상태시 비우기
+        return;
+      }
+      const data = await getFonts(user.uid);
+      setItem(data);  
+    })
+    return () => font();
   }, []);
 
-  if (!item || item.length === 0) {
-    return <div>저장된 폰트가 없습니다.</div>;
-  }
+  if (!auth.currentUser) return <div className="page-inner">로그인이 필요합니다.</div>;
+
+  if (!item || item.length === 0) return <div className="page-inner">저장된 폰트가 없습니다.</div>
 
   // PlaygroundList 페이지 customname || family 기준 select 필터
     const filtered = item.filter((font:any) =>

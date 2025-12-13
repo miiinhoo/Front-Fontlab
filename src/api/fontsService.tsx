@@ -1,4 +1,4 @@
-import { db } from "../firebase/firebase";
+import { auth, db } from "../firebase/firebase";
 import {
   collection,
   addDoc,
@@ -9,11 +9,13 @@ import {
   deleteDoc,
   orderBy,
   query,
+  where,
 } from "firebase/firestore";
 
 // 생성
 export const createFont = async (data: any) => {
   const docRef = await addDoc(collection(db, "savedFonts"), {
+    userId: auth.currentUser?.uid,
     ...data,
     createdAt: Date.now(), //  정렬 기준
   });
@@ -21,14 +23,16 @@ export const createFont = async (data: any) => {
 };
 
 // 최신순 정렬
-export const getFonts = async () => {
+export const getFonts = async (uid:string) => {
+  if (!auth.currentUser) return [];
+
   const q = query(
     collection(db, "savedFonts"),
-    orderBy("createdAt", "desc")
+    where("userId", "==", uid)
   );
 
-  const snap = await getDocs(q);
-  return snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  const res = await getDocs(q);
+  return res.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 };
 
 // 단일 조회
