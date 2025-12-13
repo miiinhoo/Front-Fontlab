@@ -16,6 +16,7 @@ a{
   text-decoration: none;
 }
 li{list-style: none;}
+body{overflow: hidden;}
 #root {
   width: 100%;
   text-align: center;
@@ -95,7 +96,9 @@ section{
     display: flex;
     flex-wrap: wrap;
     width: 100%;
+    height: 65vh;
     font-family: var(--mainfont);
+    overflow-y: auto;
     .font-cardwrap{
       width: calc(100% / 5);
       height: 300px;
@@ -109,6 +112,19 @@ section{
       border: 1px solid;
       padding: 0.7rem;
       transition: all 0.3s 0s linear;
+      &.row{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 11rem;
+        h3{
+          font-size: 2.5rem;
+        }
+        .font{
+          display: flex;
+          flex-direction: column;
+        }
+      }
       &.active{
         color: white;
         background-color: black;
@@ -199,10 +215,6 @@ section{
   }
 }
 
-footer{
-  width: 100%;
-  height: 20vh;
-}
 .pagination{
   display: flex;
   justify-content: center;

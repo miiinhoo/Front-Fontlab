@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import useCustomhook from "../../hooks/useCustomhook";
-import { getFont } from "../../api/FontsService";
+import { getFont } from "../../api/fontsService";
 import { loadFontOnce } from "../../utils/loadFontOnce";
 
 import useFontSettings from "../../hooks/useFontSettings";
@@ -38,7 +38,7 @@ export default function PlaygroundSettings() {
         heightUnit: "px",
       });
 
-      loadFontOnce(res.family, ["100", "300", "400", "700"]);
+  
     });
   }, [id]);
 
@@ -67,6 +67,7 @@ export default function PlaygroundSettings() {
       <div className="settings-wrapper">
           <textarea
             value={item.text}
+            placeholder="글자를 입력해보세요.."
             onChange={(e) => setItem({ ...item, text: e.target.value })}
           />
 
@@ -147,7 +148,7 @@ export default function PlaygroundSettings() {
           })}
           <input 
           type="text" 
-          placeholder="커스텀 네임을 작성하세요.."
+          placeholder="별칭을 작성하세요.."
           name="customname"
           value={item.customname || ""}
           onChange={(e) => setItem({ ...item, customname: e.target.value })}

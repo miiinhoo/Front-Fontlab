@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 
 export default function useGoogleFonts() {
   const API_KEY = import.meta.env.VITE_GOOGLE_FONT_KEY;

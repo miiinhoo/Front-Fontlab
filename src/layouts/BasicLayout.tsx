@@ -12,9 +12,6 @@ export default function BasicLayout():JSX.Element{
             <main>
                 <Outlet/>
             </main>
-            <footer>
-                푸터
-            </footer>
         </>
     )
 }

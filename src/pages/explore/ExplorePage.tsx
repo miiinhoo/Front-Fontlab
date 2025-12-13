@@ -2,7 +2,7 @@ import { useState, type JSX } from "react";
 import useGoogleFonts from "../../hooks/useGoogleFonts";
 import FontCard from "../../components/FontCard";
 import useCustomhook from "../../hooks/useCustomhook";
-import { createFont } from "../../api/FontsService";
+import { createFont } from "../../api/fontsService";
 
 export default function ExplorePage(): JSX.Element {
   // 훅으로 필터된 폰트 가져오기
@@ -10,6 +10,9 @@ export default function ExplorePage(): JSX.Element {
   const { navigate,handleChange, tempA } = useCustomhook();
   // 페이지 상태
   const [page, setPage] = useState<number>(1);
+
+  // 즐겨찾기
+  const [ favorite, setFavorite ] = useState(false);
   const PER_PAGE = 50;
 
   // 총 페이지 수
@@ -44,7 +47,7 @@ export default function ExplorePage(): JSX.Element {
     text: "",
     size: 32,
     weight: 400,
-    italic: false,
+    style: "normal",
     spacing: 0,
     height: 1.5,
     createdAt: Date.now(),
@@ -54,7 +57,7 @@ export default function ExplorePage(): JSX.Element {
   navigate(`/playground/settings/${res.id}`);
   };
   return (
-    <div className="page-inner">
+    <div className="page-inner list">
       {/* 상단 검색 + 카테고리 */}
       <div className="top-box">
         <p className="left-box">
