@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { deleteFont, updateFont } from "../api/FontsService";
 import toast from "react-hot-toast";
-import { login, signup } from "../api/FirebaseAPI";
+import { login, logout, signup } from "../api/FirebaseAPI";
 
 export default function useCustomhook(){
     const navigate = useNavigate();
@@ -99,6 +99,18 @@ export default function useCustomhook(){
     }
     };
 
+    const handleLogout = async () => {
+      try{
+        /** 로그아웃 확인 */
+        const cf = window.confirm("로그아웃을 하시겠습니까?");
+        if(!cf) return;
+
+        await logout();
+        toast.success("로그아웃 완료되었습니다.");
+      }catch(err:any){
+        toast.error(`로그아웃 실패하였습니다. 에러 : ${err}`);
+      }
+    }
     return{
       // 페이지 이동/위치
       navigate,
@@ -128,6 +140,7 @@ export default function useCustomhook(){
       // 유저 페이지 핸들러
       handleLogin,
       handleSignup,
+      handleLogout,
       handleUserChange
     }
 }
