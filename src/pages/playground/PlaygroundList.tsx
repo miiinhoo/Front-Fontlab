@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import useCustomhook from "../../hooks/useCustomhook";
-import { getFonts } from "../../api/FontsService";
+import { getFonts } from "../../api/fontsService";
 import { useNavigate } from "react-router-dom";
 import useGoogleFonts from "../../hooks/useGoogleFonts";
 import SelectComponent from "../../components/SelectComponent";
@@ -34,6 +34,8 @@ export default function PlaygroundList() {
       font.customname?.toLowerCase().includes(search.toLowerCase())
   );
   return (
+    <section>
+
     <div className="page-inner">
       <p className="top-box" style={{ display:"block", height:"40px", width:"100%"}}>
         <div className="right-box" style={{ float:"right"}}>
@@ -61,23 +63,23 @@ export default function PlaygroundList() {
       {filtered.map((font: any) => (
         <div
           key={font.id}
-          className="font-card"
+          className="font-card row"
           onClick={() => navigate(`/playground/settings/${font.id}`)}
         >
-          <h3>{font.family}</h3>
+          <h3 style={{ fontFamily: font.family }}>{font.family}</h3>
 
           {/* 폰트 정보들 있으면 표시 */}
           <div className="font">
-            {font.family && <span style={{ fontFamily : font.family }}>family: {font.family}</span>}
-            {font.size && <span>Size: {font.size}{font.sizeUnit}</span>}
-            {font.weight && <span>Weight: {font.weight}</span>}
-            {font.style && <span>Style: {font.style}</span>}
-            {font.spacing && <span>Spacing: {font.spacing}{font.spacingUnit}</span>}
-            {font.customname && <span>customname: {font.customname}</span>}
+            {font.size && <span>글자크기: {font.size}{font.sizeUnit}</span>}
+            {font.weight && <span>두께: {font.weight}</span>}
+            {font.style && <span>스타일: {font.style}</span>}
+            <span>간격: {font.spacing}{font.spacingUnit}</span>
+            {font.customname && <span>별칭: {font.customname}</span>}
           </div>
         </div>
       ))}
     </div>
     </div>
+    </section>
   );
 }
