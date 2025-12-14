@@ -4,6 +4,7 @@ import { deleteFont, updateFont } from "../api/fontsService";
 import toast from "react-hot-toast";
 import { login, logout, signup } from "../api/FirebaseAPI";
 
+
 export default function useCustomhook(){
     const navigate = useNavigate();
     const loc = useLocation();
@@ -43,7 +44,7 @@ export default function useCustomhook(){
         toast.error(`삭제에 실패했습니다.${error}`);
       };
     }
-    
+
     
     // 유저페이지
     const [userData, setUserData] = useState({
