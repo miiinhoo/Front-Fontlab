@@ -9,7 +9,7 @@ const PlaygroundPage = lazy(() => import("../pages/playground/PlaygroundPage"));
 const PlaygroundList = lazy(() => import("../pages/playground/PlaygroundList"));
 const PlaygroundSettings = lazy(() => import("../pages/playground/PlaygroundSettings"));
 
-const LibraryPage = lazy(() => import("../pages/LibraryPage"));
+
 
 
 const root = createBrowserRouter([
@@ -43,10 +43,6 @@ const root = createBrowserRouter([
                 element: <PlaygroundSettings />,
             },
             ],
-            },
-            {
-                path:"library",
-                element:<LibraryPage/>,
             },
             {
                 path:"user",
