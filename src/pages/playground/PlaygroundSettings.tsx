@@ -150,6 +150,7 @@ export default function PlaygroundSettings() {
           type="text" 
           placeholder="별칭을 작성하세요.."
           name="customname"
+          className="customname"
           value={item.customname || ""}
           onChange={(e) => setItem({ ...item, customname: e.target.value })}
           />
