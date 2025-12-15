@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useCustomhook from "../../hooks/useCustomhook";
 import { getFonts } from "../../api/fontsService";
 import { useNavigate } from "react-router-dom";
@@ -6,26 +6,34 @@ import useGoogleFonts from "../../hooks/useGoogleFonts";
 import SelectComponent from "../../components/SelectComponent";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
+import PlaygroundSkeleton from "../../components/skeleton/PlaygroundSkeleton";
 
 export default function PlaygroundList() {
-  const { item, setItem } = useCustomhook();
+  const { item, setItem,navigate } = useCustomhook();
   const { search, setSearch, category, setCategory } = useGoogleFonts();
-  const navigate = useNavigate();
 
+  // playground용 로딩 판별
+  const [ loading , setLoading ] = useState(true);
   useEffect(() => {
     const font = onAuthStateChanged(auth, async(user) => {
+      setLoading(true);
       if(!user) {
         setItem([]); // 로그인 안된상태시 비우기
+        setLoading(false);
         return;
       }
       const data = await getFonts(user.uid);
       setItem(data);  
+      setLoading(false);
     })
     return () => font();
   }, []);
 
+  if(loading) return <PlaygroundSkeleton/>;
+  // 비로그인 상태일시
   if (!auth.currentUser) return <div className="page-inner">로그인이 필요합니다.</div>;
 
+  // 저장된 폰트가 없을 시
   if (!item || item.length === 0) return <div className="page-inner">저장된 폰트가 없습니다.</div>
 
   // PlaygroundList 페이지 customname || family 기준 select 필터
@@ -60,7 +68,13 @@ export default function PlaygroundList() {
         
       </p>
       <div className="font-grid">
-      {filtered.map((font: any) => (
+      {
+        loading
+        ? Array.from({ length:6 }).map((_,i) => (
+          <PlaygroundSkeleton key={i}/>
+        ))
+        :
+        filtered.map((font: any) => (
         <div
           key={font.id}
           className="font-card row"
@@ -77,7 +91,8 @@ export default function PlaygroundList() {
             {font.customname && <span>별칭: {font.customname}</span>}
           </div>
         </div>
-      ))}
+      ))
+      }
     </div>
     </div>
     </section>

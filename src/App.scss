@@ -112,6 +112,9 @@ section{
       border: 1px solid;
       padding: 0.7rem;
       transition: all 0.3s 0s linear;
+      &.skeleton{
+          min-height: 120px; 
+      }
       &.row{
         display: flex;
         justify-content: space-between;
