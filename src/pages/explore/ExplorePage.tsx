@@ -1,18 +1,17 @@
-import { useState, type JSX } from "react";
+import { lazy, Suspense, useState, type JSX } from "react";
 import useGoogleFonts from "../../hooks/useGoogleFonts";
 import FontCard from "../../components/FontCard";
 import useCustomhook from "../../hooks/useCustomhook";
 import { createFont } from "../../api/fontsService";
+import FontCardSkeleton from "../../components/skeleton/FontCardSkeleton";
 
 export default function ExplorePage(): JSX.Element {
   // 훅으로 필터된 폰트 가져오기
-  const { fonts, search, setSearch, category, setCategory } = useGoogleFonts();
+  const { fonts, search, setSearch, category, setCategory,loading } = useGoogleFonts();
   const { navigate,handleChange, tempA } = useCustomhook();
   // 페이지 상태
   const [page, setPage] = useState<number>(1);
 
-  // 즐겨찾기
-  const [ favorite, setFavorite ] = useState(false);
   const PER_PAGE = 50;
 
   // 총 페이지 수
@@ -56,6 +55,8 @@ export default function ExplorePage(): JSX.Element {
   // 저장 성공 → settings로 이동
   navigate(`/playground/settings/${res.id}`);
   };
+
+  
   return (
     <div className="page-inner list">
       {/* 상단 검색 + 카테고리 */}
@@ -90,11 +91,19 @@ export default function ExplorePage(): JSX.Element {
         
       </div>
 
-      {/* 폰트 카드 그리드 */}
       <div className="font-grid">
-        {pageFonts.map((font) => (
-          <FontCard key={font.family} font={font} tempA={tempA} click={()=>handleSelect(font)}/>
-        ))}
+        {
+          // 로딩 중 표시용 Skeleton 카드
+          loading
+          ? Array.from({length : PER_PAGE}).map((_,i) => (
+            <FontCardSkeleton key={i}/>
+          ))
+          :
+          // 로딩 완료 후 보여주는 폰트 카드 
+          pageFonts.map((font) => (
+            <FontCard key={font.family} font={font} tempA={tempA} click={()=>handleSelect(font)}/>
+          ))
+        }
       </div>
 
       {/* 페이지네이션 */}
