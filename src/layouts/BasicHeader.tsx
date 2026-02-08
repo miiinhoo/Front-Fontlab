@@ -10,6 +10,7 @@ export default function BasicHeader():JSX.Element{
     // 로그인 판별
     const isLoggedIn = !auth.currentUser ? NavLogout : NavLogin;
 
+    // 로그아웃기능,useLocation,상태값 가져오기
     const { handleLogout,loc,bool,setBool } = useCustomhook();
 
     return(
