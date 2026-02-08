@@ -79,7 +79,11 @@ export default function useCustomhook(){
       try{
         await login(email, password); // tempA: email tempB: pw로 지정..
         toast.success("로그인 성공.");
+<<<<<<< HEAD
         navigate("/");
+=======
+        navigate("/explore");
+>>>>>>> second
       }catch(error:any){
         toast.error("이메일 또는 비밀번호가 올바르지 않습니다.");
       }
@@ -130,6 +134,10 @@ export default function useCustomhook(){
         if(!cf) return;
 
         await logout();
+<<<<<<< HEAD
+=======
+        navigate("/explore");
+>>>>>>> second
         toast.success("로그아웃 완료되었습니다.");
       }catch(err:any){
         toast.error(`로그아웃 실패하였습니다. 에러 : ${err}`);
