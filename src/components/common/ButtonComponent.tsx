@@ -1,0 +1,24 @@
+import type { JSX } from "react";
+import './Button.scss';
+
+type Props = {
+    text: string,
+    cln?: string,
+    types?: "button" | "submit" | "reset",
+    event?: () => void,
+}
+
+export default function ButtonComponent({text,cln,types,event}:Props):JSX.Element{
+    return(
+        <>
+            <button
+            className={cln}
+            onClick={event}
+            style={{ cursor: "pointer"}}
+            type={types || "button"}
+            >
+                {text}
+            </button>
+        </>
+    )
+}

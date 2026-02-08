@@ -1,0 +1,309 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+*{
+  margin: 0;padding: 0;
+}
+:root{
+  --mainfont:"Noto Sans", sans-serif;
+
+  --lightgray:rgb(224, 224, 224);
+  --solidgray:gray;
+  --black:#000;
+  --subColor:#333;
+  --subColor2:#555;
+}
+a{
+  color: inherit;
+  text-decoration: none;
+}
+li{list-style: none;}
+body{overflow: hidden; height: 100vh;}
+#root {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  overflow-x: hidden;
+}
+main{width: 100%;height: 100%;}
+header{
+  width: 100%;
+  height: 20vh;
+  position: fixed;
+  .header-inner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
+    height: 100%;
+    margin: 0 auto;
+    h1{
+      max-width: 250px;
+      a{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        img{
+          width: inherit;
+          height: inherit;
+          object-fit: cover;
+        }
+      }
+    }
+    .gnb{
+      display: flex;
+      gap: 1rem;
+      
+      li{
+        font-family: var(--mainfont);
+        font-size: 1.5rem;
+        letter-spacing: -0.07rem;
+        position: relative;
+      }
+
+      a {
+        position: relative;
+      }
+
+      a::after,a.on::after{
+        content: "";
+        display: block;
+        width: 10px;
+        height: 10px;
+        background-color: #000;
+        border-radius: 50%;
+        position: absolute;
+        top:0;right: -11.5px;
+        transform: scale(0);
+        transform-origin: center;
+        transition: all 0.3s 0s ease-in-out;
+      }
+        a.on::after{
+            transform: scale(1);
+        }
+      }
+        button{
+          font-family: var(--mainfont);
+          font-size: 1.5rem;
+          letter-spacing: -0.07rem;
+          cursor: pointer;
+          background-color: none;
+          border: none;
+          padding: 0;
+        }
+        .userSet{
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          width: 200px;
+          padding: 5% 0;
+          background-color: white;
+          border: 1px solid #000;
+          border-radius: 10px;
+          position: absolute;
+          top: 100%;left: 0;
+          transform: scaleY(0);
+          transform-origin: top;
+          transition: all 0.5s 0s ease-in-out;
+          &.open{
+            transform: scaleY(1);
+          }
+          li{
+            cursor: pointer;
+
+          }
+        }
+    }
+  }
+
+section{
+  width: 100%;
+  height: 100vh;
+}
+.page-inner{
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 20vh 3% 0;
+  .top-box{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    .left-box,.right-box{
+      input,select{
+        font-size: 2rem;
+        text-indent: 18px;
+        border: 1px solid;
+        border-radius: 15px;
+      }
+    } 
+    .right-box{
+      display: flex;
+      align-items: center;
+    }
+    .right-box > input,select{
+      border-radius: 8px;
+      margin-left: 1rem;
+      option{
+        font-size: 1.5rem;
+      }
+    }
+    
+  }
+  .font-grid{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 65vh;
+    font-family: var(--mainfont);
+    overflow-y: auto;
+    .font-cardwrap{
+      width: calc(100% / 5);
+      height: 300px;
+      position: relative;
+    }
+    .font-card{
+      cursor: pointer;
+      box-sizing: border-box;
+      width: 100%;
+      height: 100%;
+      border: 1px solid;
+      padding: 0.7rem;
+      transition: all 0.3s 0s linear;
+      &.skeleton{
+          min-height: 120px; 
+      }
+      &.row{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 11rem;
+        h3{
+          font-size: 2.5rem;
+        }
+        .font{
+          display: flex;
+          flex-direction: column;
+        }
+      }
+      &.active{
+        color: white;
+        background-color: black;
+      }
+      .font-title{
+        text-align-last: left;
+        text-indent: 1rem;
+      }
+      .fonts{
+        text-align: left;
+        font-size: 4rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+  .preview{
+    width: 100%;
+    height: 30vh;
+    text-align: left;
+    margin-top: 2vw;
+    border: 1px solid;
+    overflow: hidden;
+  }
+  /*세팅페이지*/
+  .settings-content{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    .settings-wrapper{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 50%;
+      label{font-size: 16px;}
+      textarea{
+        width: 100%;
+        resize: none;
+        font-size: 18px;
+      }
+      input.range-bar,input.customname{
+        width: 100%;
+        font-size : 20px;
+      }
+    }
+    .right-content{
+      flex: 1;
+      .codes{
+        width:50%;
+        text-indent: 5%;
+        background-color: #1E1E1E;
+        font-family: Consolas, 'Courier New', monospace;
+        font-size: 22px;
+        border-radius: 15px;
+        overflow: hidden;
+        text-align: left;
+        letter-spacing: -0.6px;
+        color: white;
+        position: relative;
+        margin: 3% 0 0 5%;
+        h3{
+          font-weight: normal; 
+          background-color: #333333;
+          opacity: 0.7; 
+          font-size: 16px; 
+          padding: 3% 0;
+        }
+        strong{
+           color: #94daff;
+          font-weight: normal;
+        }
+        span{
+          color: #CE9178;
+          &.lightgreen{
+            color: #B5CEA8;
+          }
+        }
+
+      }
+      .btn-row{
+      display : flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5%;
+      margin-top: 5%;
+      button{
+        width: calc(20%);
+        font-size: 2rem;
+      }
+    }
+    }
+  }
+}
+
+.pagination{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  border-radius: 7px;
+  font-size: 22px;
+  font-family: var(--mainfont);
+  padding: 0.2rem;
+  button{
+    width:30px;
+    background-color: var(--lightgray);
+    cursor: pointer;
+  }
+}
+.pagination.active{
+  background-color: black;
+  color: white;
+}
+.arrow{
+  border: none;
+  font-size: 22px;
+  font-family: var(--mainfont);
+  padding: 0.2rem;
+}

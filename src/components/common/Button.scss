@@ -1,0 +1,54 @@
+
+
+button{
+    font-size: 1rem;
+    background-color: white;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 5px 15px;
+    &.copybtn{
+        padding-left: 6%;
+        position: absolute;
+        top:5px;right: 0;
+        background-color: unset;
+        color: whitesmoke;
+        border: none;
+        &::after{
+            content: "";
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: url(../../imgs/copybtn.svg) center center no-repeat;
+            background-size: 15px 15px;
+            position: absolute;
+            top:8px; left:6px;
+        }
+    }
+    &.bookmark{
+        background-color: rgba(253, 227, 80, 0.7);
+        padding-left: 2rem;
+        border: none;
+        position: absolute;
+        bottom: 20%; left:50%;
+        transform: translate(-50%,0) scale(1);
+        &.active{
+            background-color: black;
+            color: whitesmoke;
+        }
+        &::after{
+            content: "";
+            display: block;
+            width: 27px;
+            height: 27px;
+            background: url(../../imgs/bookmark.png) center center no-repeat;
+            background-size: 27px 27px;
+            position: absolute;
+            top:3px;
+            left:3px;
+        }
+        &:hover{
+            transform: translate(-50%,0) scale(1.05);
+            transition: all 0.2s linear;
+        }
+    }
+}
