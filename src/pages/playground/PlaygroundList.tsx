@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import useCustomhook from "../../hooks/useCustomhook";
 import { getFonts } from "../../api/fontsService";
-import { useNavigate } from "react-router-dom";
 import useGoogleFonts from "../../hooks/useGoogleFonts";
 import SelectComponent from "../../components/SelectComponent";
 import { onAuthStateChanged } from "firebase/auth";
