@@ -3,6 +3,7 @@ import BasicLayout from "../layouts/BasicLayout";
 import { lazy } from "react";
 import UserRouter from "./user/UserRouter";
 
+const MainPage = lazy(() => import("../pages/MainPage"));
 const ExplorePage = lazy(() => import("../pages/explore/ExplorePage"));
 const PlaygroundPage = lazy(() => import("../pages/playground/PlaygroundPage"));
 const PlaygroundList = lazy(() => import("../pages/playground/PlaygroundList"));
@@ -34,7 +35,6 @@ const root = createBrowserRouter([
                 index: true, // /playground 접근 시
                 element: <Navigate to="list" replace />, // 자동 리디렉트
             },
-            
             {
                 path: "list",
                 element: <PlaygroundList />,
