@@ -4,11 +4,7 @@ import useCustomhook from "../../hooks/useCustomhook";
 import ButtonComponent from "../../components/common/ButtonComponent";
 
 export default function UserSignup():JSX.Element{
-<<<<<<< HEAD
-    const { navigate, userData, handleSignup, handleUserChange } = useCustomhook();
-=======
     const { userData, handleSignup, handleUserChange } = useCustomhook();
->>>>>>> second
     return(
         <section>
             <div className="page-inner">

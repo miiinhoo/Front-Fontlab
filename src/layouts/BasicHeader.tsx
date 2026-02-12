@@ -1,4 +1,4 @@
-import { useState, type JSX } from "react";
+import { type JSX } from "react";
 import { Link } from "react-router-dom";
 import Logo from '../imgs/FontLabLogo.png';
 import { NavLogout,NavLogin } from "../arrays/NavArrays";
@@ -38,35 +38,7 @@ export default function BasicHeader():JSX.Element{
                                         onClick={() => setBool(prev => !prev)}>
                                             MYPAGE
                                         </button>
-                                        <ul className={`userSet ${bool ? "open" : ""}`}>
-                                            {title.option.map((list:any,inx:any) => {
-                                                /** 서브메뉴(즐겨찾기) 열고/닫기 기능 */
-                                                const [ openSubmenu,SetOpenSubmenu ] = useState<boolean>(false);
-                                                <>
-                                                {list.name === "즐겨찾기" ? 
-                                                <li key={inx}>
-                                                    <button
-                                                    onClick={() => SetOpenSubmenu(open => !open)}
-                                                    >
-                                                        즐겨찾기
-                                                    </button>
-                                                    { openSubmenu && (
-                                                        <div>
-                                                            {/* explore페이지에서 추가된 즐겨찾기 폰트들 이름을 column형태로 나열 + 복사(폰트이름,ex: Arial sans-serif) + 즐겨찾기 삭제기능(체크박스를 각줄에 추가하고, 위에 체크박스 하나 추가해서 전체삭제 기능도) */}
-                                                        </div>
-                                                    )}
-                                                </li>
-                                                :
-                                                <li key={inx}>
-                                                    <button
-                                                    >
-                                                        회원정보수정
-                                                    </button>
-                                                </li>
-                                                }
-                                                </>
-                                        })}
-                                        </ul>
+                                        
                                     </li>
                                 )
                             }
