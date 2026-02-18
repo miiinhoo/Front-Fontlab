@@ -1,5 +1,5 @@
 
-import './App.scss'
+import './App.scss';
 import { RouterProvider } from 'react-router-dom'
 import root from './router/root'
 import { Toaster } from 'react-hot-toast'
