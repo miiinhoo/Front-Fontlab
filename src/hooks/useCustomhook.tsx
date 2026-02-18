@@ -50,9 +50,11 @@ export default function useCustomhook(){
     const [userData, setUserData] = useState({
       username: "",
       email: "",
+      emailDomain: "naver.com",
       password: "",
       passwordCheck: "",
     });
+    
 
     const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = e.target;
@@ -91,16 +93,21 @@ export default function useCustomhook(){
     }
     // 유저 회원가입
     const handleSignup = async () => {
-      const { email, password, passwordCheck, username } = userData;
+      const { email, emailDomain, password, passwordCheck, username } = userData;
       
+      const fullEmail =
+      emailDomain === "직접입력"
+        ? email
+        : `${email}@${emailDomain}`;
+
     // --폼검증
     // 모두 빈칸?
-    if (!email || !password || !username) {
+    if (!fullEmail || !password || !username) {
       toast.error("모든 항목을 입력해주세요.");
       return;
     }
     // 이메일 형식 불일치
-    if(!email.includes("@")) {
+    if(!fullEmail.includes("@")) {
       toast.error("이메일 형식이 올바르지 않습니다..");
       return;
     }
@@ -116,7 +123,7 @@ export default function useCustomhook(){
     }
 
     try {
-      await signup(email, password, username); // tempA: email tempB: pw tempC: username
+      await signup(fullEmail, password, username); // tempA: email tempB: pw tempC: username
       toast.success("회원가입 성공!");
       navigate("/user/login");
     } catch (err: any) {
@@ -160,6 +167,7 @@ export default function useCustomhook(){
       setBool,
       setTempA,
       userData,
+      setUserData,
 
       // 이벤트 핸들러
       handleChange,

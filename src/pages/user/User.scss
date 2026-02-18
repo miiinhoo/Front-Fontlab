@@ -1,0 +1,63 @@
+// 로그인, 회원가입 페이지 form 관련 스타일 개별 조정.
+form{
+    width: 50%;
+    height: 420px;
+    position: absolute;
+    top:50%;left:50%;
+    transform: translate(-50%,-50%);
+
+    .form-inner{  
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 25px;
+    width: 500px;
+    height: 100%;
+    margin: 0 auto;
+        .loginpage-title{
+            margin-bottom: 5%;
+        }
+        label{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        input{
+            width: 80%;
+            font-size: 1rem;
+            border-radius: 7px;
+            text-indent: 20px;
+            padding: 10px 0;
+        }
+
+        .button-content{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10%;
+            flex: 1;
+            button {
+                font-size: 1.5rem;
+                transition: all 0.3s linear;
+                background-color: #d6d6d6;
+                border: 1px solid rgb(163, 163, 163);
+                color: black;
+                &:hover {
+                background-color: black;
+                color: white;
+                }
+            }
+            
+            button.active {
+                background-color: #333;
+                color: white;
+                cursor: pointer;
+                border: none;
+                &:hover {
+                background-color: black;
+                color: white;
+                }
+            }
+        }
+    }
+}
