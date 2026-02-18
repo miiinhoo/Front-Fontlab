@@ -62,7 +62,9 @@ export default function useCustomhook(){
         [name]: value,
       }));
     };
+    
     // 유저 로그인
+    
     const handleLogin = async() => {
       const { email, password } = userData;
       
@@ -79,8 +81,9 @@ export default function useCustomhook(){
       try{
         await login(email, password); // tempA: email tempB: pw로 지정..
         toast.success("로그인 성공.");
-        navigate("/explore");
-        navigate("/");
+
+        const from = loc.state?.from?.pathname || "/";
+        navigate(from, {replace: true});
 
       }catch(error:any){
         toast.error("이메일 또는 비밀번호가 올바르지 않습니다.");

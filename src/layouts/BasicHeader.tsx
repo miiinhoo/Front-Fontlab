@@ -10,7 +10,7 @@ export default function BasicHeader({user}:any):JSX.Element{
     const isLoggedIn = user ? NavLogin : NavLogout;
 
     // 로그아웃기능,useLocation,상태값 가져오기
-    const { handleLogout,loc,bool,setBool } = useCustomhook();
+    const { handleLogout,loc, } = useCustomhook();
 
     return(
         <div className="header-inner">
@@ -29,18 +29,7 @@ export default function BasicHeader({user}:any):JSX.Element{
                             (title.path === "/user" &&
                             (loc.pathname === "/user/edit" ||
                             loc.pathname === "/user/favorite"));
-                            if(title.text === "MYPAGE"){
-                                return(
-                                    <li key={title.text}>
-                                        <button
-                                        className={`menu-text ${bool ? "on" : ""}`}
-                                        onClick={() => setBool(prev => !prev)}>
-                                            MYPAGE
-                                        </button>
-                                        
-                                    </li>
-                                )
-                            }
+                            
                             if(title.text === "LOGOUT"){
                                 return(
                                     <li key={title.text}>
@@ -56,7 +45,6 @@ export default function BasicHeader({user}:any):JSX.Element{
                                 <li key={title.text}>
                                     <Link 
                                     to={title.path}
-                                    onClick={() => setBool(false)}
                                     className={`menu-text ${navActive ? "on" : ""}`}
                                     >
                                         {title.text}
