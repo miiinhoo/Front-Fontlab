@@ -3,12 +3,15 @@ import { Outlet } from "react-router-dom";
 import BasicHeader from "./BasicHeader";
 import { auth } from "../firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import useCustomhook from "../hooks/useCustomhook";
 
 
 export default function BasicLayout():JSX.Element{
+    const { item: user, setItem: setUser } = useCustomhook();
+
     useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-        console.log("진짜 로그인 상태 =>", user);
+        setUser(user);
     });
 
     return () => unsubscribe();
@@ -17,7 +20,7 @@ export default function BasicLayout():JSX.Element{
     return(
         <>
             <header>
-                <BasicHeader/>
+                <BasicHeader user={user}/>
             </header>
             <main>
                 <Outlet/>

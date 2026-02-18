@@ -2,13 +2,12 @@ import { type JSX } from "react";
 import { Link } from "react-router-dom";
 import Logo from '../imgs/FontLabLogo.png';
 import { NavLogout,NavLogin } from "../arrays/NavArrays";
-import { auth } from "../firebase/firebase";
 import useCustomhook from "../hooks/useCustomhook";
 
-export default function BasicHeader():JSX.Element{
+export default function BasicHeader({user}:any):JSX.Element{
 
     // 로그인 판별
-    const isLoggedIn = !auth.currentUser ? NavLogout : NavLogin;
+    const isLoggedIn = user ? NavLogin : NavLogout;
 
     // 로그아웃기능,useLocation,상태값 가져오기
     const { handleLogout,loc,bool,setBool } = useCustomhook();

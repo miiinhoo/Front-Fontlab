@@ -3,7 +3,6 @@ import BasicLayout from "../layouts/BasicLayout";
 import { lazy } from "react";
 import UserRouter from "./user/UserRouter";
 
-const MainPage = lazy(() => import("../pages/MainPage"));
 const ExplorePage = lazy(() => import("../pages/explore/ExplorePage"));
 const PlaygroundPage = lazy(() => import("../pages/playground/PlaygroundPage"));
 const PlaygroundList = lazy(() => import("../pages/playground/PlaygroundList"));
