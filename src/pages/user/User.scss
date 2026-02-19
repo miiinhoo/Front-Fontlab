@@ -1,3 +1,37 @@
+// 로그인 , 회원가입 페이지 스타일 구성
+.auth-layout{
+    width: 100vw;
+    height: 100vh;
+    .auth-container{
+        width: 60%;
+        margin: 0 auto;
+        position: relative;
+        .auth-header{
+            width: 100%;
+            position: absolute;
+            img{
+                width: 200px;
+            }
+        }
+        .auth-footer{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            img{
+                width: 100px;
+            }
+            p{
+                font-weight: bold;
+                letter-spacing: -0.9px;
+            }
+        }
+    }
+}
+
 // 로그인, 회원가입 페이지 form 관련 스타일 개별 조정.
 form{
     width: 50%;
@@ -5,13 +39,16 @@ form{
     position: absolute;
     top:50%;left:50%;
     transform: translate(-50%,-50%);
+    border: 1px solid var(--solidgray);
+    padding: 3.5vw 0;
+    border-radius: 12px;
 
     .form-inner{  
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 25px;
-    width: 500px;
+    width: 85%;
     height: 100%;
     margin: 0 auto;
         .loginpage-title{
@@ -21,6 +58,31 @@ form{
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
+            .check{
+                width: 40%;
+                padding: 5px 15px;
+                background-color: var(--lightgray);
+                border: 1px solid var(--solidgray);
+                font-size: 0.75vw;
+                border-radius: 5px;
+                position: absolute;
+                top: -1.65vw;right: 0;
+                z-index: 99;
+                &::after{
+                    content: "";
+                    display: block;
+                    width: 20px;
+                    height: 10px;
+                    border: 1px solid var(--solidgray);
+                    background-color: var(--lightgray);
+                    transform: rotate(180deg) rotateY(180deg);
+                    clip-path: polygon(30% 0%, 50% 150%, 100% 100%);
+                    position: absolute;
+                    bottom: -0.6vw;left: 0.5vw;
+                    z-index: 98;
+                }
+            }
         }
         input{
             width: 80%;
@@ -28,6 +90,17 @@ form{
             border-radius: 7px;
             text-indent: 20px;
             padding: 10px 0;
+            &.email{
+                width: 60%;
+            }
+            &:focus{
+                outline: none;
+                box-shadow: 2px 2px 5px rgb(0, 0, 0);
+            }
+        }
+        select{
+            flex: 1;
+            font-size: 1rem;
         }
 
         .button-content{
@@ -37,11 +110,13 @@ form{
             gap: 10%;
             flex: 1;
             button {
+                width: 80%;
                 font-size: 1.5rem;
                 transition: all 0.3s linear;
                 background-color: #d6d6d6;
                 border: 1px solid rgb(163, 163, 163);
                 color: black;
+                margin: 0 auto;
                 &:hover {
                 background-color: black;
                 color: white;
