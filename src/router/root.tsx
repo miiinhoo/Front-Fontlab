@@ -3,6 +3,7 @@ import BasicLayout from "../layouts/BasicLayout";
 import { lazy } from "react";
 import UserRouter from "./user/UserRouter";
 import RouterGuard from "./guard/RouterGuard";
+import AuthLayout from "../layouts/AuthLayout";
 
 const ExplorePage = lazy(() => import("../pages/explore/ExplorePage"));
 const PlaygroundPage = lazy(() => import("../pages/playground/PlaygroundPage"));
@@ -14,7 +15,7 @@ const PlaygroundSettings = lazy(() => import("../pages/playground/PlaygroundSett
 
 
 const root = createBrowserRouter([
-
+    // 기본 홈페이지 탭
     {
         path:"",
         element:<BasicLayout/>,
@@ -49,12 +50,14 @@ const root = createBrowserRouter([
                     },
                 ],
             },
-            {
-                path:"user",
-                element:<Outlet/>,
-                children: [...UserRouter],
-            }
+            
         ]
+    },
+    // 로그인/회원가입 탭
+    {
+        path:"user",
+        element:<AuthLayout/>,
+        children: [...UserRouter],
     }
 ]);
 export default root;

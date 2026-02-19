@@ -1,20 +1,28 @@
 import "./User.scss";
-import type { JSX } from "react";
+import { useState, type JSX } from "react";
 import { UserArray } from "../../arrays/UserArrays";
 import useCustomhook from "../../hooks/useCustomhook";
 import ButtonComponent from "../../components/common/ButtonComponent";
 
 export default function UserSignup():JSX.Element{
 
-    const { userData, setUserData, handleSignup, handleUserChange } = useCustomhook();
+    const { 
+        bool:pwError,setBool:setPwError,
+        userData, setUserData, handleSignup, handleUserChange
+     } = useCustomhook();
 
+     // 드롭다운 이메일 리스트 ..
     const domainList = [
     "naver.com",
     "daum.net",
     "gmail.com",
+    "yahoo.com",
+    "kakao.com",
+    "nate.com",
+    "icloud.com",
     "직접입력"
     ];
-
+    const [pwFocus, setPwFocus] = useState<boolean>(false);
     
 
     return(
@@ -28,11 +36,12 @@ export default function UserSignup():JSX.Element{
                         if (form.name === "email") {
                             return (
                             <label key={form.name}>
-                                <div style={{ display: "flex", gap: "5px" }}>
+                                <div style={{ display: "flex", gap: "5px",width:"80%" }}>
                                 <input
                                     type="text"
                                     placeholder="이메일"
                                     value={userData.email}
+                                    className="email"
                                     onChange={(e) =>
                                     setUserData(prev => ({
                                         ...prev,
@@ -60,7 +69,36 @@ export default function UserSignup():JSX.Element{
                             </label>
                             );
                         }
+                        if(form.name === "passwordCheck"){
+                            return(
+                                <label key={form.name}>
+                                    <input type={"password"} 
+                                    name={"비밀번호 확인"}
+                                    placeholder={"비밀번호 확인"}
+                                    value={userData.passwordCheck}
+                                    onChange={(e) => {
+                                        const val = e.target.value;
 
+                                        setUserData(prev => ({
+                                            ...prev,
+                                            passwordCheck: val
+                                        }));
+                                        setPwError(userData.password != val);
+                                    }}
+                                    onFocus={() => setPwFocus(true)}
+                                    onBlur={() => setPwFocus(false)}
+                                    />
+                                    
+                                    {pwFocus && userData.passwordCheck && (
+                                    pwError ? (
+                                        <p className="check">❌ 비밀번호가 다릅니다</p>
+                                    ) : (
+                                        <p className="check">✔️ 비밀번호가 일치합니다</p>
+                                    )
+                                    )}
+                                </label>
+                            )
+                        }
                         return (
                             <label key={form.name}>
                             <input

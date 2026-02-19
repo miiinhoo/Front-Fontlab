@@ -1,5 +1,5 @@
 import "./User.scss";
-import type { JSX } from "react";
+import { useEffect, type JSX } from "react";
 import { UserArray } from "../../arrays/UserArrays";
 import useCustomhook from "../../hooks/useCustomhook";
 import ButtonComponent from "../../components/common/ButtonComponent";
@@ -11,9 +11,12 @@ export default function UserLogin():JSX.Element{
     // userData에 값이 들어왔을 때, 스타일이 조건부로 변경되도록 변경.
     const isValid = userData.email && userData.password;
 
+    useEffect(() => {
+    document.title = "FontLab | 로그인";
+    }, []);
+
     return(
         <section>
-            <div className="page-inner">
                 <form>
                     <div className="form-inner">
                     <h1 className="loginpage-title">로그인</h1>
@@ -46,7 +49,6 @@ export default function UserLogin():JSX.Element{
                         </div>
                     </div>
                 </form>
-            </div>
         </section>
     )
 }

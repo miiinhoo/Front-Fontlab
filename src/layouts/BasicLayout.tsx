@@ -10,21 +10,33 @@ import useCustomhook from "../hooks/useCustomhook";
 export default function BasicLayout():JSX.Element{
     
     const { item: user,
-        setItem: setUser
+        setItem: setUser,
+        loc
     } = useCustomhook();
 
     const [ loading, setLoading ] = useState<boolean>(true);
 
     useEffect(() => {
+        // 유저 정보 저장
         const unsub = onAuthStateChanged(auth,(user) => {
             setUser(user);
             setLoading(false);
         });
-
+        // 사이트 탭
+        if(loc.pathname === "/user/login"){
+            document.title = "FontLab | 로그인";
+        }else if(loc.pathname === "/user/signup"){
+            document.title = "FontLab | 회원가입";
+        }else{
+            document.title = "FontLab";
+        }
         return () => unsub();
-    },[])
+    },[loc.pathname])
 
     if (loading) return <div>Loading</div>;
+
+
+
 
     return(
         <>

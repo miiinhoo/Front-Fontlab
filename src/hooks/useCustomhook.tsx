@@ -123,7 +123,7 @@ export default function useCustomhook(){
     }
 
     try {
-      await signup(fullEmail, password, username); // tempA: email tempB: pw tempC: username
+      await signup(fullEmail, password, username); // email+드롭다운(ex:naver.com)이 합쳐진 fullEmail과 비밀번호,닉네임을 서버에 넘김.
       toast.success("회원가입 성공!");
       navigate("/user/login");
     } catch (err: any) {
