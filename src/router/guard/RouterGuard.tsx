@@ -2,9 +2,10 @@
 
 import { Navigate, useOutletContext } from "react-router-dom";
 import useCustomhook from "../../hooks/useCustomhook";
+import { AuthStore } from "../../store/AuthStore";
 
 export default function RouterGuard({children}:any){
-    const { user } = useOutletContext<any>(); 
+    const user = AuthStore(state => state.user);
     const { loc } = useCustomhook();
 
     if (!user) {

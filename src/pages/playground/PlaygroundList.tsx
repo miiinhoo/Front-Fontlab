@@ -5,7 +5,6 @@ import useGoogleFonts from "../../hooks/useGoogleFonts";
 import SelectComponent from "../../components/SelectComponent";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
-import PlaygroundSkeleton from "../../components/skeleton/PlaygroundSkeleton";
 
 export default function PlaygroundList() {
   const { item, setItem,navigate } = useCustomhook();
@@ -28,7 +27,7 @@ export default function PlaygroundList() {
     return () => font();
   }, []);
 
-  if(loading) return <PlaygroundSkeleton/>;
+
   // 비로그인 상태일시
   if (!auth.currentUser) return <div className="page-inner">로그인이 필요합니다.</div>;
 
@@ -68,11 +67,7 @@ export default function PlaygroundList() {
       </p>
       <div className="font-grid">
       {
-        loading
-        ? Array.from({ length:6 }).map((_,i) => (
-          <PlaygroundSkeleton key={i}/>
-        ))
-        :
+        !loading &&
         filtered.map((font: any) => (
         <div
           key={font.id}

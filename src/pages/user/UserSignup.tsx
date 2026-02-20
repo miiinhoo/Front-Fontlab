@@ -1,10 +1,10 @@
 import "./User.scss";
-import { useState, type JSX } from "react";
+import { useState } from "react";
 import { UserArray } from "../../arrays/UserArrays";
 import useCustomhook from "../../hooks/useCustomhook";
 import ButtonComponent from "../../components/common/ButtonComponent";
 
-export default function UserSignup():JSX.Element{
+export default function UserSignup(){
 
     const { 
         bool:pwError,setBool:setPwError,

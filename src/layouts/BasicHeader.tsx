@@ -1,10 +1,10 @@
-import { type JSX } from "react";
+
 import { Link } from "react-router-dom";
 import Logo from '../imgs/FontLabLogo.png';
 import { NavLogout,NavLogin } from "../arrays/NavArrays";
 import useCustomhook from "../hooks/useCustomhook";
 
-export default function BasicHeader({user}:any):JSX.Element{
+export default function BasicHeader({user}:any){
 
     // 로그인 판별
     const isLoggedIn = user ? NavLogin : NavLogout;

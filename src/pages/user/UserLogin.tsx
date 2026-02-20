@@ -1,10 +1,10 @@
 import "./User.scss";
-import { useEffect, type JSX } from "react";
+import { useEffect } from "react";
 import { UserArray } from "../../arrays/UserArrays";
 import useCustomhook from "../../hooks/useCustomhook";
 import ButtonComponent from "../../components/common/ButtonComponent";
 
-export default function UserLogin():JSX.Element{
+export default function UserLogin(){
 
     const { navigate,userData, handleUserChange, handleLogin } = useCustomhook();
     
