@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { loadFontOnce } from "../utils/loadFontOnce";
 import useCustomhook from "../hooks/useCustomhook";
 import { auth } from "../firebase/firebase";

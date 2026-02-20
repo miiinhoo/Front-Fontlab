@@ -1,8 +1,8 @@
-import type { JSX } from "react";
+
 import { Link, Outlet } from "react-router-dom";
 import MainLogo from "../imgs/FontLabLogo.png";
 
-export default function AuthLayout():JSX.Element{
+export default function AuthLayout(){
 
     return(
         <div className="auth-layout">

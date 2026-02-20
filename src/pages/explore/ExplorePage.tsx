@@ -1,11 +1,11 @@
-import { lazy, Suspense, useState, type JSX } from "react";
+import { useState } from "react";
 import useGoogleFonts from "../../hooks/useGoogleFonts";
 import FontCard from "../../components/FontCard";
 import useCustomhook from "../../hooks/useCustomhook";
 import { createFont } from "../../api/fontsService";
 import FontCardSkeleton from "../../components/skeleton/FontCardSkeleton";
 
-export default function ExplorePage(): JSX.Element {
+export default function ExplorePage() {
   // 훅으로 필터된 폰트 가져오기
   const { fonts, search, setSearch, category, setCategory,loading } = useGoogleFonts();
   const { navigate,handleChange, tempA } = useCustomhook();

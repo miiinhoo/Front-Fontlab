@@ -1,6 +1,5 @@
-import type { JSX } from "react";
 
-export default function FontCardSkeleton():JSX.Element{
+export default function FontCardSkeleton(){
     return(
         <div className="font-cardwrap">
             <div className={"font-card"} 

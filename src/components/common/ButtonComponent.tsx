@@ -1,4 +1,4 @@
-import type { JSX } from "react";
+
 import './Button.scss';
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
     disable?: boolean,
 }
 
-export default function ButtonComponent({text,cln,types,event,styles,disable}:Props):JSX.Element{
+export default function ButtonComponent({text,cln,types,event,styles,disable}:Props){
     return(
         <>
             <button
