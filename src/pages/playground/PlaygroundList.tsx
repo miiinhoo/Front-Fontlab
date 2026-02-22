@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import useCustomhook from "../../hooks/useCustomhook";
-import { getFonts } from "../../api/fontsService";
+import { getFonts, incrementClickCount } from "../../api/fontsService";
 import useGoogleFonts from "../../hooks/useGoogleFonts";
 import SelectComponent from "../../components/SelectComponent";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
+import toast from "react-hot-toast";
 
 export default function PlaygroundList() {
   const { item, setItem,navigate } = useCustomhook();
@@ -12,6 +13,7 @@ export default function PlaygroundList() {
 
   // playground용 로딩 판별
   const [ loading , setLoading ] = useState(true);
+   const [ sortByClick, setSortByClick ] = useState<boolean>(false);
   useEffect(() => {
     const font = onAuthStateChanged(auth, async(user) => {
       setLoading(true);
@@ -39,11 +41,30 @@ export default function PlaygroundList() {
       font.family.toLowerCase().includes(search.toLowerCase()) ||
       font.customname?.toLowerCase().includes(search.toLowerCase())
   );
+
+  // 사용자가 font-card를 누른 횟수 기준 정렬
+ 
+
+  // 올바른 방식
+const sorted = item
+  .filter((font: any) =>
+    font.family.toLowerCase().includes(search.toLowerCase()) ||
+    font.customname?.toLowerCase().includes(search.toLowerCase())
+  )
+  .sort((a: any, b: any) =>
+    sortByClick ? (b.clickCount ?? 0) - (a.clickCount ?? 0) : 0
+  );
   return (
     <section>
 
     <div className="page-inner">
       <p className="top-box" style={{ display:"block", height:"40px", width:"100%"}}>
+        <button onClick={() => {
+          setSortByClick(!sortByClick)
+          toast.success(sortByClick ? "기본순으로 정렬" : "자주 눌러본 순으로 정렬")
+        }}>
+          {sortByClick ? "기본순" : "즐겨찾기순"}
+        </button>
         <div className="right-box" style={{ float:"right"}}>
           <input
             placeholder="폰트이름 또는 별칭 검색"
@@ -68,11 +89,21 @@ export default function PlaygroundList() {
       <div className="font-grid">
       {
         !loading &&
-        filtered.map((font: any) => (
+        sorted.map((font: any) => (
         <div
           key={font.id}
           className="font-card row"
-          onClick={() => navigate(`/playground/settings/${font.id}`)}
+          onClick={async () => {
+            try{
+              await incrementClickCount(font.id);
+                  console.log("클릭 완료:", font.id, font.family);
+              navigate(`/playground/settings/${font.id}`);
+            }catch(e:any){
+              console.error("에러:", e);
+              toast.error(e);
+            }
+            
+        }}
         >
           <h3 style={{ fontFamily: font.family }}>{font.family}</h3>
 
