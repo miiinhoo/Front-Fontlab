@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Logo from '../imgs/FontLabLogo.png';
 import { NavLogout,NavLogin } from "../arrays/NavArrays";
 import useCustomhook from "../hooks/useCustomhook";
+import { useEffect } from "react";
 
 export default function BasicHeader({user}:any){
 
@@ -12,6 +13,9 @@ export default function BasicHeader({user}:any){
     // 로그아웃기능,useLocation,상태값 가져오기
     const { handleLogout,loc, } = useCustomhook();
 
+    useEffect(() => {
+        console.log()
+    },[])
     return(
         <div className="header-inner">
                 <h1>

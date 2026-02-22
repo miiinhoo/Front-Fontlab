@@ -7,9 +7,9 @@ import {
   doc,
   updateDoc,
   deleteDoc,
-  orderBy,
   query,
   where,
+  increment,
 } from "firebase/firestore";
 
 // 생성
@@ -46,6 +46,11 @@ export const getFont = async (id: string) => {
 export const updateFont = async (id: string, data: any) => {
   const ref = doc(db, "savedFonts", id);
   await updateDoc(ref, data);
+};
+
+export const incrementClickCount = async (fontId: string) => {
+  const ref = doc(db, "savedFonts", fontId); 
+  await updateDoc(ref, { clickCount: increment(1) });
 };
 
 // 삭제
