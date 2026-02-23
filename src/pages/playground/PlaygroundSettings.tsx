@@ -210,7 +210,7 @@ export default function PlaygroundSettings() {
               </div>
 
               {/* 임베드 코드 표시 */}
-              <pre className="embed-code">
+              <pre className="embed-code" style={{ height:"200px",whiteSpace: "pre-wrap", overflowY:"auto"}}>
                 <code>{embedCode}</code>
               </pre>
 
@@ -262,21 +262,21 @@ export default function PlaygroundSettings() {
 
       </div>
       
-      {/** 버튼 */}
-      <div className="btn-row">
+            {/* 버튼 */}
+            <div className="btn-row">
         <ButtonComponent 
-        text="저장"
-        event={handleSave}
-        cln="savebtn"
+          text="저장"
+          event={handleSave}
+          cln="savebtn"
         />
         <ButtonComponent
-        text="삭제"
-        event={handleDelete}
-        cln="delbtn"
+          text="삭제"
+          event={handleDelete}
+          cln="delbtn"
         />
         <ButtonComponent
-        text="리스트"
-        event={() => navigate("/playground")}
+          text="리스트"
+          event={() => navigate(`/playground/list/${encodeURIComponent(item.family)}`)}
         />
       </div>
       </div>

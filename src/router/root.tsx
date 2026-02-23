@@ -10,10 +10,6 @@ const PlaygroundPage = lazy(() => import("../pages/playground/PlaygroundPage"));
 const PlaygroundList = lazy(() => import("../pages/playground/PlaygroundList"));
 const PlaygroundSettings = lazy(() => import("../pages/playground/PlaygroundSettings"));
 
-
-
-
-
 const root = createBrowserRouter([
     // 기본 홈페이지 탭
     {
@@ -42,6 +38,10 @@ const root = createBrowserRouter([
                     },
                     {
                         path: "list",
+                        element: <PlaygroundList />,
+                    },
+                    {
+                        path:"list/:family",
                         element: <PlaygroundList />,
                     },
                     {
