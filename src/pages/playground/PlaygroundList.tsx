@@ -14,15 +14,9 @@ export default function PlaygroundList() {
   const { search, setSearch, category, setCategory } = useGoogleFonts();
   const { family } = useParams<{ family?: string }>();
 
-  // playground용 로딩 판별
   const [ loading , setLoading ] = useState(true);
   const [ sortByClick, setSortByClick ] = useState<boolean>(false);
 
-  // 정렬 모드 변경 핸들러
-  // - 왜 useState를 쓰냐?
-  //   정렬 방식(기본순/즐겨찾기순)은 이 리스트 페이지 안에서만 쓰이는 "UI 로컬 상태"라서
-  //   전역으로 공유할 필요가 없고, 간단한 토글이므로 컴포넌트 내부 useState가 가장 가볍기 때문.
-  //   (전역으로 써야 하는 값이었으면 Zustand 같은 스토어에 넣는 게 맞음)
   const handleSortChange = (mode: "default" | "favorite") => {
     const isFavorite = mode === "favorite";
     setSortByClick(isFavorite);
@@ -44,83 +38,67 @@ export default function PlaygroundList() {
     return () => font();
   }, []);
 
-  // 비로그인 상태일시
   if (!auth.currentUser) return <div className="page-inner">로그인이 필요합니다.</div>;
 
-  // 저장된 폰트가 없을 시
   if (!item || item.length === 0) return <div className="page-inner">저장된 폰트가 없습니다.</div>
 
   const decodedFamily = family ? decodeURIComponent(family) : undefined;
  
   let cards: any[] = [];
-let handleCardClick: (font: any) => void;
+  let handleCardClick: (font: any) => void;
 
-// /playground/list/:family 프리셋 리스트 모드
-if (decodedFamily) {
-  const familyFiltered = item.filter(
-    (font: any) => font.family === decodedFamily
-  );
+  if (decodedFamily) {
+    const familyFiltered = item.filter(
+      (font: any) => font.family === decodedFamily
+    );
 
-  const filtered = familyFiltered.filter((font: any) =>
-    font.family.toLowerCase().includes(search.toLowerCase()) ||
-    font.customname?.toLowerCase().includes(search.toLowerCase())
-  );
+    const filtered = familyFiltered.filter((font: any) =>
+      font.family.toLowerCase().includes(search.toLowerCase()) ||
+      font.customname?.toLowerCase().includes(search.toLowerCase())
+    );
 
-  const sorted = filtered.sort((a: any, b: any) =>
-    sortByClick ? (b.clickCount ?? 0) - (a.clickCount ?? 0) : 0
-  );
+    const sorted = filtered.sort((a: any, b: any) =>
+      sortByClick ? (b.clickCount ?? 0) - (a.clickCount ?? 0) : 0
+    );
 
-  cards = sorted;
-  handleCardClick = async (font) => {
-    try {
-      // 1) Firestore에 클릭 수 +1
-      await incrementClickCount(font.id);
+    cards = sorted;
+    handleCardClick = async (font) => {
+      try {
+        await incrementClickCount(font.id);
 
-      // 2) 로컬 상태에도 클릭 수를 바로 반영
-      //    왜 여기서 setItem을 쓰냐?
-      //    - 즐겨찾기 정렬 기준인 clickCount를 화면에서도 즉시 올려줘야
-      //      다음에 리스트로 돌아왔을 때 정렬 효과를 체감할 수 있음.
-      //    - 이 리스트/세팅 흐름 안에서만 쓰이는 값이라
-      //      전역(Zustand)보다 useCustomhook의 item 상태를 업데이트하는 게 가장 단순함.
-      setItem((prev: any) => {
-        if (!Array.isArray(prev)) return prev;
-        return prev.map((f: any) =>
-          f.id === font.id
-            ? { ...f, clickCount: (f.clickCount ?? 0) + 1 }
-            : f
-        );
-      });
+        setItem((prev: any) => {
+          if (!Array.isArray(prev)) return prev;
+          return prev.map((f: any) =>
+            f.id === font.id
+              ? { ...f, clickCount: (f.clickCount ?? 0) + 1 }
+              : f
+          );
+        });
 
-      // 3) 설정 페이지로 이동
-      navigate(`/playground/settings/${font.id}`);
-    } catch (e: any) {
-      console.error("에러:", e);
-      toast.error(e);
-    }
-  };
+        navigate(`/playground/settings/${font.id}`);
+      } catch (e: any) {
+        console.error("에러:", e);
+        toast.error(e);
+      }
+    };
+  } else {
+    const filtered = item.filter((font: any) =>
+      font.family.toLowerCase().includes(search.toLowerCase()) ||
+      font.customname?.toLowerCase().includes(search.toLowerCase())
+    );
 
-// /playground/list 패밀리(폰트 이름) 리스트 모드
-} else {
-  // 모든 프리셋에 대해 검색 먼저
-  const filtered = item.filter((font: any) =>
-    font.family.toLowerCase().includes(search.toLowerCase()) ||
-    font.customname?.toLowerCase().includes(search.toLowerCase())
-  );
+    const familyMap = new Map<string, any>();
+    filtered.forEach((font: any) => {
+      if (!familyMap.has(font.family)) {
+        familyMap.set(font.family, font);
+      }
+    });
 
-  // family 기준으로 하나씩만 남기기
-  const familyMap = new Map<string, any>();
-  filtered.forEach((font: any) => {
-    if (!familyMap.has(font.family)) {
-      familyMap.set(font.family, font); // 대표 하나만 저장
-    }
-  });
-
-  cards = Array.from(familyMap.values());
-  // 클릭 시 해당 family의 프리셋 리스트로 이동
-  handleCardClick = (font) => {
-    navigate(`/playground/list/${encodeURIComponent(font.family)}`);
-  };
-}
+    cards = Array.from(familyMap.values());
+    handleCardClick = (font) => {
+      navigate(`/playground/list/${encodeURIComponent(font.family)}`);
+    };
+  }
 
   return (
     <section>
