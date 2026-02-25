@@ -19,12 +19,20 @@ export default function useGoogleFonts() {
       });
   }, []);
 
-  // Explore페이지 font name 기준 검색 필터
+  // 이름 검색 + 카테고리(일반/한글지원) 필터
   const filteredFonts = fonts
+    // 1) 폰트 이름 검색
     .filter((f) =>
       f.family.toLowerCase().includes(search.toLowerCase())
     )
-    .filter((f) => category === "all" || f.category === category);
+    // 2) 카테고리 필터
+    .filter((f) => {
+      if (category === "all") return true;
+      if (category === "ko") {
+        return Array.isArray(f.subsets) && f.subsets.includes("korean");
+      }
+      return f.category === category;
+    });
 
   
 

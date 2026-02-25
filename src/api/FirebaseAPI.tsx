@@ -1,6 +1,6 @@
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 
 export const login = async (email: string, pw: string) => {
   return await signInWithEmailAndPassword(auth, email, pw);
@@ -13,6 +13,9 @@ export const logout = async () => {
 export const signup = async (email: string, pw: string, username: string) => {
   const userCred = await createUserWithEmailAndPassword(auth, email, pw);
   const uid = userCred.user.uid;
+
+  // Firebase Auth 프로필에 displayName 설정
+  await updateProfile(userCred.user, { displayName: username });
 
   // Firestore에 유저 정보 저장
   await setDoc(doc(db, "users", uid), {

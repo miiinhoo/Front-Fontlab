@@ -76,119 +76,39 @@ export default function PlaygroundSettings() {
   return (
     <>
       <div className="page-inner">
-      <h2>{item.family}</h2>
-
-      <div
-        className="preview"
-        style={{
-          fontFamily: item.family,
-          fontSize: `${item.size}${item.sizeUnit}`,
-          fontWeight: item.weight,
-          fontStyle: item.style,
-          letterSpacing: `${item.spacing}${item.spacingUnit}`,
-        }}
-      >
-        {item.text || "FontLab123!@#$%"}
-      </div>
-
       <div className="settings-content">
-      {/** 세팅페이지 input range,radio, textarea등 묶음.. */}
-      <div className="settings-wrapper">
-          <textarea
-            value={item.text}
-            placeholder="글자를 입력해보세요.."
-            onChange={(e) => setItem({ ...item, text: e.target.value })}
-          />
+        <div className="settings-left">
+          <div className="settings-header">
+            <h2>{item.family}</h2>
+            {item.customname && (
+              <p className="preset-name">별칭: {item.customname}</p>
+            )}
+          </div>
 
-          {SettingBlocks.map((block) => {
-            const key = block.key;
-            const unit = item[key + "Unit"] || "px";
-            
-            const range = block.range ?? unitRanges[key][unit];
-            
-            return (
-              <div key={key} className="setting-block">
-                <label>
-                  {block.label}: {item[key]}
-                  {block.unit ? unit : ""}
-                </label>
-                
-                {/* SLIDER */}
-                {(block.type === "slider" || block.type === "slider-preset")&&(
-                  <input
-                    type="range"
-                    className="range-bar"
-                    min={range.min}
-                    max={range.max}
-                    step={range.step}
-                    value={item[block.key]}
-                    onChange={(e) => changeValue(key, Number(e.target.value))}
-                  />
-                )}
+          <div className="preview-card">
+            <textarea
+              value={item.text}
+              placeholder="글자를 입력해보세요.."
+              onChange={(e) => setItem({ ...item, text: e.target.value })}
+            />
+            <div
+              className="preview"
+              style={{
+                fontFamily: item.family,
+                fontSize: `${item.size}${item.sizeUnit}`,
+                fontWeight: item.weight,
+                fontStyle: item.style,
+                letterSpacing: `${item.spacing}${item.spacingUnit}`,
+              }}
+            >
+              {item.text || "FontLab123!@#$%"}
+            </div>
+          </div>
 
-                {/* UNIT */}
-                {block.unit && (
-                  <div className="unit-row">
-                    {["px", "rem", "em"].map((u) => (
-                      <label key={u}>
-                        <input
-                          type="radio"
-                          checked={unit === u}
-                          onChange={() => changeUnit(key, u)}
-                        />
-                        {u}
-                      </label>
-                    ))}
-                  </div>
-                )}
-
-                {/* PRESETS */}
-                {block.type === "slider-preset" && (
-                  <div className="unit-row">
-                    {block.presets?.map((p: any) => (
-                      <label key={p.value}>
-                        <input
-                          type="radio"
-                          checked={item[key] === p.value}
-                          onChange={() => changePreset(key, p.value)}
-                        />
-                        {p.label}
-                      </label>
-                    ))}
-                  </div>
-                )}
-
-                {block.type === "preset" && block.presets && (
-                <div className="unit-row">
-                  {block.presets.map((p) => (
-                    <label key={p.value}>
-                      <input
-                        type="radio"
-                        checked={item[key] === p.value}
-                        onChange={() => changePreset(key, p.value)}
-                      />
-                      {p.label}
-                    </label>
-                  ))}
-                </div>
-              )}
-              </div>
-            );
-          })}
-          <input 
-          type="text" 
-          placeholder="별칭을 작성하세요.."
-          name="customname"
-          className="customname"
-          value={item.customname || ""}
-          onChange={(e) => setItem({ ...item, customname: e.target.value })}
-          />
-      </div>
-      <div className="right-content">
-      <div className="codes">
+          <div className="codes-row">
+            <div className="codes">
               <div className="codes-header">
                 <h3>Import</h3>
-                {/* @import / <link> radio 선택 */}
                 <div className="unit-row">
                   <label>
                     <input
@@ -209,8 +129,10 @@ export default function PlaygroundSettings() {
                 </div>
               </div>
 
-              {/* 임베드 코드 표시 */}
-              <pre className="embed-code" style={{ height:"200px",whiteSpace: "pre-wrap", overflowY:"auto"}}>
+              <pre
+                className="embed-code"
+                style={{ height: "120px", whiteSpace: "pre-wrap", overflowY: "auto" }}
+              >
                 <code>{embedCode}</code>
               </pre>
 
@@ -219,67 +141,154 @@ export default function PlaygroundSettings() {
                 event={handleCopyEmbed}
                 cln="copybtn"
               />
-          </div>
-      {/** 코드 복붙기능 */}
-      <div className="codes">
-        <h3>CSS</h3>
-        <br />
-        <p className="row">
-          <strong>font-family</strong>:<span>'{item.family}', sans-serif</span>
-        </p>
-        <p className="row">
-          <strong>font-size</strong>:<span className="lightgreen">{item.size}{item.sizeUnit}</span>;
-        </p>
-        <p className="row">
-          <strong>font-weight</strong>:<span>{item.weight}</span>;
-        </p>
-        <p className="row">
-          <strong>font-style</strong>:<span>{item.style}</span>;
-        </p>
-        <p className="row">
-          <strong>letter-spacing</strong>:<span className="lightgreen">{item.spacing}{item.spacingUnit}</span>;
-        </p> 
-        <br />
-        <ButtonComponent 
-          text="코드 복사"
-          event={() => {
-            try{
-            const css = [
-              `font-family: '${item.family}', sans-serif;`,
-              `font-size: ${item.size}${item.sizeUnit};`,
-              `font-weight: ${item.weight};`,
-              `font-style: ${item.style};`,
-              `letter-spacing: ${item.spacing}${item.spacingUnit};`,
-            ].join("\n");
-            navigator.clipboard.writeText(css);
-            toast.success("코드를 복사했습니다.")
-            }catch(error){
-              toast.error("복사하는 과정에서 에러가 발생했습니다.")
-            }
-          }}
-          cln="copybtn"
-        />
+            </div>
 
-      </div>
-      
-            {/* 버튼 */}
-            <div className="btn-row">
-        <ButtonComponent 
-          text="저장"
-          event={handleSave}
-          cln="savebtn"
-        />
-        <ButtonComponent
-          text="삭제"
-          event={handleDelete}
-          cln="delbtn"
-        />
-        <ButtonComponent
-          text="리스트"
-          event={() => navigate(`/playground/list/${encodeURIComponent(item.family)}`)}
-        />
-      </div>
-      </div>
+            <div className="codes">
+              <div className="codes-header">
+                <h3>CSS</h3>
+              </div>
+              <br />
+              <p className="row">
+                <strong>font-family</strong>:<span>'{item.family}', sans-serif</span>
+              </p>
+              <p className="row">
+                <strong>font-size</strong>:<span className="lightgreen">{item.size}{item.sizeUnit}</span>;
+              </p>
+              <p className="row">
+                <strong>font-weight</strong>:<span>{item.weight}</span>;
+              </p>
+              <p className="row">
+                <strong>font-style</strong>:<span>{item.style}</span>;
+              </p>
+              <p className="row">
+                <strong>letter-spacing</strong>:<span className="lightgreen">{item.spacing}{item.spacingUnit}</span>;
+              </p> 
+              <br />
+              <ButtonComponent 
+                text="코드 복사"
+                event={() => {
+                  try{
+                  const css = [
+                    `font-family: '${item.family}', sans-serif;`,
+                    `font-size: ${item.size}${item.sizeUnit};`,
+                    `font-weight: ${item.weight};`,
+                    `font-style: ${item.style};`,
+                    `letter-spacing: ${item.spacing}${item.spacingUnit};`,
+                  ].join("\n");
+                  navigator.clipboard.writeText(css);
+                  toast.success("코드를 복사했습니다.")
+                  }catch(error){
+                    toast.error("복사하는 과정에서 에러가 발생했습니다.")
+                  }
+                }}
+                cln="copybtn"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="right-content">
+          <div className="btn-row">
+            <ButtonComponent 
+              text="저장"
+              event={handleSave}
+              cln="savebtn"
+            />
+            <ButtonComponent
+              text="삭제"
+              event={handleDelete}
+              cln="delbtn"
+            />
+            <ButtonComponent
+              text="리스트"
+              event={() => navigate(`/playground/list/${encodeURIComponent(item.family)}`)}
+            />
+          </div>
+
+          <div className="settings-wrapper">
+            {SettingBlocks.map((block) => {
+              const key = block.key;
+              const unit = item[key + "Unit"] || "px";
+              const range = block.range ?? unitRanges[key][unit];
+
+              return (
+                <div key={key} className="setting-block">
+                  <label>
+                    {block.label}: {item[key]}
+                    {block.unit ? unit : ""}
+                  </label>
+
+                  {(block.type === "slider" || block.type === "slider-preset") && (
+                    <input
+                      type="range"
+                      className="range-bar"
+                      min={range.min}
+                      max={range.max}
+                      step={range.step}
+                      value={item[block.key]}
+                      onChange={(e) => changeValue(key, Number(e.target.value))}
+                    />
+                  )}
+
+                  {block.unit && (
+                    <div className="unit-row">
+                      {["px", "rem", "em"].map((u) => (
+                        <label key={u}>
+                          <input
+                            type="radio"
+                            checked={unit === u}
+                            onChange={() => changeUnit(key, u)}
+                          />
+                          {u}
+                        </label>
+                      ))}
+                    </div>
+                  )}
+
+                  {block.type === "slider-preset" && (
+                    <div className="unit-row">
+                      {block.presets?.map((p: any) => (
+                        <label key={p.value}>
+                          <input
+                            type="radio"
+                            checked={item[key] === p.value}
+                            onChange={() => changePreset(key, p.value)}
+                          />
+                          {p.label}
+                        </label>
+                      ))}
+                    </div>
+                  )}
+
+                  {block.type === "preset" && block.presets && (
+                    <div className="unit-row">
+                      {block.presets.map((p) => (
+                        <label key={p.value}>
+                          <input
+                            type="radio"
+                            checked={item[key] === p.value}
+                            onChange={() => changePreset(key, p.value)}
+                          />
+                          {p.label}
+                        </label>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+
+            <input
+              type="text"
+              placeholder="별칭을 작성하세요.."
+              name="customname"
+              className="customname"
+              value={item.customname || ""}
+              onChange={(e) => setItem({ ...item, customname: e.target.value })}
+            />
+          </div>
+
+        </div>
       </div>
     </div>
     </>

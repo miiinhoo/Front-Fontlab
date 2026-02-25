@@ -4,6 +4,8 @@ import FontCard from "../../components/FontCard";
 import useCustomhook from "../../hooks/useCustomhook";
 import { createFont } from "../../api/fontsService";
 import FontCardSkeleton from "../../components/skeleton/FontCardSkeleton";
+import SelectComponent from "../../components/SelectComponent";
+import { FONT_FILTER_OPTIONS } from "../../arrays/FilterArrays";
 
 export default function ExplorePage() {
   // 훅으로 필터된 폰트 가져오기
@@ -52,7 +54,7 @@ export default function ExplorePage() {
     createdAt: Date.now(),
   });
 
-  // 저장 성공 → settings로 이동
+  // 저장 성공 > settings로 이동
   navigate(`/playground/settings/${res.id}`);
   };
 
@@ -71,22 +73,21 @@ export default function ExplorePage() {
 
         <p className="right-box">
           <input
-          placeholder="폰트 검색"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+            placeholder="폰트 검색"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
 
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
+          <SelectComponent
+            values={category}
+            event={(e) => setCategory(e.target.value)}
           >
-            <option value="all">전체</option>
-            <option value="sans-serif">고딕체</option>
-            <option value="serif">명조체</option>
-            <option value="display">디스플레이</option>
-            <option value="handwriting">손글씨</option>
-            <option value="monospace">고정폭</option>
-          </select>
+            {FONT_FILTER_OPTIONS.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.text}
+              </option>
+            ))}
+          </SelectComponent>
         </p>
         
       </div>
