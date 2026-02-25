@@ -184,6 +184,7 @@ export default function PlaygroundList() {
               onChange={(e) => setSearch(e.target.value)}
             />
 
+            // 컴포넌트로 변경
             <SelectComponent
               values={category}
               event={(e) => setCategory(e.target.value)}
