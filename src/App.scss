@@ -249,6 +249,14 @@ section{
       border: 1px solid;
       padding: 0.7rem;
       transition: all 0.3s 0s linear;
+      .my-pick-badge{
+        display: inline-block;
+        padding: 0.1rem 0.6rem;
+        border-radius: 999px;
+        background-color: #000;
+        color: #fff;
+        font-size: 0.9rem;
+      }
       &.skeleton{
           min-height: 120px; 
       }
@@ -257,6 +265,12 @@ section{
         justify-content: space-between;
         align-items: center;
         height: 11rem;
+        .font-card-main{
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.25rem;
+        }
         h3{
           font-size: 2.5rem;
         }
@@ -351,9 +365,10 @@ section{
       flex-direction: column;
       gap: 10px;
       width: 100%;
-      label{font-size: 16px;}
+      .setting-block{ display: flex; flex-wrap: wrap;}
+      label{width: 100px;font-size: 16px;}
       input.range-bar,input.customname{
-        width: 100%;
+        width: 80%;
         font-size : 20px;
       }
     }

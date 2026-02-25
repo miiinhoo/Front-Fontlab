@@ -4,6 +4,7 @@ import useCustomhook from "../../hooks/useCustomhook";
 import { getFonts, incrementClickCount } from "../../api/fontsService";
 import useGoogleFonts from "../../hooks/useGoogleFonts";
 import SelectComponent from "../../components/SelectComponent";
+import { FONT_FILTER_OPTIONS } from "../../arrays/FilterArrays";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/firebase";
 import toast from "react-hot-toast";
@@ -17,35 +18,59 @@ export default function PlaygroundList() {
   const [ loading , setLoading ] = useState(true);
   const [ sortByClick, setSortByClick ] = useState<boolean>(false);
 
+  const username = auth.currentUser?.displayName;
+
   const handleSortChange = (mode: "default" | "favorite") => {
     const isFavorite = mode === "favorite";
     setSortByClick(isFavorite);
     toast.success(isFavorite ? "자주 눌러본 순으로 정렬" : "기본순으로 정렬");
   };
 
+  const user = auth.currentUser;
+
   useEffect(() => {
-    const font = onAuthStateChanged(auth, async(user) => {
-      setLoading(true);
-      if(!user) {
-        setItem([]); // 로그인 안된상태시 비우기
-        setLoading(false);
-        return;
-      }
-      const data = await getFonts(user.uid);
-      setItem(data);  
+    if (!user) {
+      setItem([]);
       setLoading(false);
-    })
-    return () => font();
-  }, []);
+      return;
+    }
+
+    const fetchFonts = async () => {
+      setLoading(true);
+      const data = await getFonts(user.uid);
+      setItem(data);
+      setLoading(false);
+    };
+
+    fetchFonts();
+  }, [user]);
 
   if (!auth.currentUser) return <div className="page-inner">로그인이 필요합니다.</div>;
 
   if (!item || item.length === 0) return <div className="page-inner">저장된 폰트가 없습니다.</div>
 
   const decodedFamily = family ? decodeURIComponent(family) : undefined;
- 
+
+  // 각 family별로 가장 많이 눌린 clickCount 계산 (전체 기준)
+  const familyClickStats = new Map<string, number>();
+  (item as any[]).forEach((font: any) => {
+    const current = familyClickStats.get(font.family) ?? 0;
+    const click = font.clickCount ?? 0;
+    if (click > current) {
+      familyClickStats.set(font.family, click);
+    }
+  });
+
+  let globalFamilyMaxClick = 0;
+  familyClickStats.forEach((value) => {
+    if (value > globalFamilyMaxClick) {
+      globalFamilyMaxClick = value;
+    }
+  });
+
   let cards: any[] = [];
   let handleCardClick: (font: any) => void;
+  let maxClickCount = 0;
 
   if (decodedFamily) {
     const familyFiltered = item.filter(
@@ -62,6 +87,10 @@ export default function PlaygroundList() {
     );
 
     cards = sorted;
+    maxClickCount =
+      sorted.length > 0
+        ? Math.max(...sorted.map((font: any) => font.clickCount ?? 0))
+        : 0;
     handleCardClick = async (font) => {
       try {
         await incrementClickCount(font.id);
@@ -106,14 +135,16 @@ export default function PlaygroundList() {
   
         {decodedFamily ? (
           <div className="list-header">
-            <h2>{decodedFamily} 프리셋 리스트</h2>
+            <h2>
+              {username ? `${username}님의 ` : ""}{decodedFamily} 프리셋 리스트
+            </h2>
             <p className="list-subtext">
               이 폰트로 저장해 둔 설정들이에요. 별칭을 사용하면 더 쉽게 구분할 수 있습니다.
             </p>
           </div>
         ) : (
           <div className="list-header">
-            <h2>저장된 폰트 리스트</h2>
+            <h2>{username ? `${username}님의`:""} 폰트 리스트</h2>
             <p className="list-subtext">
               프리셋이 하나라도 있는 폰트만 보여줍니다, explore에서 폰트를 생성해보세요.
             </p>
@@ -157,43 +188,56 @@ export default function PlaygroundList() {
               values={category}
               event={(e) => setCategory(e.target.value)}
             >
-              <option value="all">전체</option>
-              <option value="sans-serif">고딕체</option>
-              <option value="serif">명조체</option>
-              <option value="display">디스플레이</option>
-              <option value="handwriting">손글씨</option>
-              <option value="monospace">고정폭</option>
+              {FONT_FILTER_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.text}
+                </option>
+              ))}
             </SelectComponent>
           </div>
         </p>
         <div className="font-grid">
           {
             !loading &&
-            cards.map((font: any) => (
-              <div
-                key={font.id}
-                className="font-card row"
-                onClick={() => handleCardClick(font)}
-              >
-          
-                <h3 
-                style={{ fontFamily: font.family }}
-                >
-                  {decodedFamily ? (font.customname || font.family) : font.family}
-                </h3>
+            cards.map((font: any) => {
+              const isMyPick = decodedFamily
+                ? maxClickCount > 0 &&
+                  (font.clickCount ?? 0) === maxClickCount
+                : (() => {
+                    const familyMax = familyClickStats.get(font.family) ?? 0;
+                    return globalFamilyMaxClick > 0 && familyMax === globalFamilyMaxClick;
+                  })();
 
-                {/* 폰트 정보들 있으면 표시 */}
-                {decodedFamily && (
-                <div className="font">
-                  {font.size && <span>글자크기: {font.size}{font.sizeUnit}</span>}
-                  {font.weight && <span>두께: {font.weight}</span>}
-                  {font.style && <span>스타일: {font.style}</span>}
-                  <span>간격: {font.spacing}{font.spacingUnit}</span>
-                  {font.customname && <span>별칭: {font.customname}</span>}
+              return (
+                <div
+                  key={font.id}
+                  className="font-card row"
+                  onClick={() => handleCardClick(font)}
+                >
+                  <div className="font-card-main">
+                    {isMyPick && (
+                      <span className="my-pick-badge">MY PICK</span>
+                    )}
+                    <h3
+                      style={{ fontFamily: font.family }}
+                    >
+                      {decodedFamily ? (font.customname || font.family) : font.family}
+                    </h3>
+                  </div>
+
+                  {/* 폰트 정보들 있으면 표시 */}
+                  {decodedFamily && (
+                    <div className="font">
+                      {font.size && <span>글자크기: {font.size}{font.sizeUnit}</span>}
+                      {font.weight && <span>두께: {font.weight}</span>}
+                      {font.style && <span>스타일: {font.style}</span>}
+                      <span>간격: {font.spacing}{font.spacingUnit}</span>
+                      {font.customname && <span>별칭: {font.customname}</span>}
+                    </div>
+                  )}
                 </div>
-                )}
-              </div>
-            ))
+              );
+            })
           }
         </div>
       </div>
