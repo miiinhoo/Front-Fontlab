@@ -7,7 +7,7 @@ export type UnitType = "px" | "rem" | "em";
 export const defaultUnitValue = {
   size: { px: 16, rem: 1, em: 1 },
   spacing: { px: 0, rem: 0.01, em: 0.01 },
-  height: { px: 20, rem: 1.2, em: 1.2 },
+  // line-height를 안쓰기에 삭제함.
 };
 
 // 단위별 슬라이더 min/max/step

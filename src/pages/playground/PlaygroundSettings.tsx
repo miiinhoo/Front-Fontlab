@@ -46,9 +46,9 @@ export default function PlaygroundSettings() {
     getFont(id).then((res) => {
       setItem({
         ...res,
-        sizeUnit: "px",
-        spacingUnit: "px",
-        heightUnit: "px",
+        // 이미 저장된 단위가 있으면 그대로 사용, 없으면 px로 초기화
+        sizeUnit: (res as any).sizeUnit ?? "px",
+        spacingUnit: (res as any).spacingUnit ?? "px",
       });
 
   

@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import BasicLayout from "../layouts/BasicLayout";
 import { lazy } from "react";
 import UserRouter from "./user/UserRouter";
@@ -8,6 +8,7 @@ import AuthLayout from "../layouts/AuthLayout";
 const ExplorePage = lazy(() => import("../pages/explore/ExplorePage"));
 const PlaygroundPage = lazy(() => import("../pages/playground/PlaygroundPage"));
 const PlaygroundList = lazy(() => import("../pages/playground/PlaygroundList"));
+const PlaygroundFamilyList = lazy(() => import("../pages/playground/PlaygroundFamilyList"));
 const PlaygroundSettings = lazy(() => import("../pages/playground/PlaygroundSettings"));
 
 const root = createBrowserRouter([
@@ -42,7 +43,7 @@ const root = createBrowserRouter([
                     },
                     {
                         path:"list/:family",
-                        element: <PlaygroundList />,
+                        element: <PlaygroundFamilyList />,
                     },
                     {
                         path: "settings/:id",
