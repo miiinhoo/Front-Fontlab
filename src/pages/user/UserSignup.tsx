@@ -3,13 +3,13 @@ import { useState } from "react";
 import { UserArray } from "../../arrays/UserArrays";
 import useCustomhook from "../../hooks/useCustomhook";
 import ButtonComponent from "../../components/common/ButtonComponent";
+import useAuthForm from "../../hooks/useAuthForm";
 
 export default function UserSignup(){
 
-    const { 
-        bool:pwError,setBool:setPwError,
-        userData, setUserData, handleSignup, handleUserChange
-     } = useCustomhook();
+    const { bool:pwError,setBool:setPwError } = useCustomhook();
+
+    const { userData, setUserData, handleSignup, handleUserChange } = useAuthForm();
 
      // 드롭다운 이메일 리스트 ..
     const domainList = [
@@ -22,6 +22,7 @@ export default function UserSignup(){
     "icloud.com",
     "직접입력"
     ];
+    // 비밀번호 확인 관련 포커스/온블러 전용 상태
     const [pwFocus, setPwFocus] = useState<boolean>(false);
     
 

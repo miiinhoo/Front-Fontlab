@@ -3,10 +3,12 @@ import { useEffect } from "react";
 import { UserArray } from "../../arrays/UserArrays";
 import useCustomhook from "../../hooks/useCustomhook";
 import ButtonComponent from "../../components/common/ButtonComponent";
+import useAuthForm from "../../hooks/useAuthForm";
 
 export default function UserLogin(){
 
-    const { navigate,userData, handleUserChange, handleLogin } = useCustomhook();
+    const { navigate } = useCustomhook();
+    const { userData, handleUserChange, handleLogin } = useAuthForm();
     
     // userData에 값이 들어왔을 때, 스타일이 조건부로 변경되도록 변경.
     const isValid = userData.email && userData.password;
