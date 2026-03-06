@@ -1,4 +1,3 @@
-import { useState } from "react";
 import useGoogleFonts from "../../hooks/useGoogleFonts";
 import FontCard from "../../components/FontCard";
 import useCustomhook from "../../hooks/useCustomhook";
@@ -6,41 +5,24 @@ import { createFont } from "../../api/fontsService";
 import FontCardSkeleton from "../../components/skeleton/FontCardSkeleton";
 import SelectComponent from "../../components/SelectComponent";
 import { FONT_FILTER_OPTIONS } from "../../arrays/FilterArrays";
+import usePagination from "../../hooks/usePagination";
 
 export default function ExplorePage() {
   // 훅으로 필터된 폰트 가져오기
   const { fonts, search, setSearch, category, setCategory,loading } = useGoogleFonts();
   const { navigate,handleChange, tempA } = useCustomhook();
-  // 페이지 상태
-  const [page, setPage] = useState<number>(1);
-
   const PER_PAGE = 50;
 
-  // 총 페이지 수
-  const totalPages = Math.ceil(fonts.length / PER_PAGE);
-
-  // 9페이지씩 묶는 그룹 크기
-  const groupSize = 9;
-
-  // 현재 페이지가 속한 그룹
-  const currentGroup = Math.ceil(page / groupSize);
-
-  // 시작페이지
-  const startPage = (currentGroup - 1) * groupSize + 1;
-
-  // 마지막 페이지
-  const endPage = Math.min(startPage + groupSize - 1, totalPages);
-
-  // 보여줄 페이지 배열 생성
-  const pageNumbers: number[] = [];
-  for (let i = startPage; i <= endPage; i++) {
-    pageNumbers.push(i);
-  }
-
-  // 폰트 목록 자르기
-  const start = (page - 1) * PER_PAGE;
-  const end = start + PER_PAGE;
-  const pageFonts = fonts.slice(start, end);
+  const {
+    page,
+    pageNumbers,
+    pageItems: pageFonts,
+    hasPrevGroup,
+    hasNextGroup,
+    goPrevGroup,
+    goNextGroup,
+    setPage,
+  } = usePagination(fonts, PER_PAGE, 9);
 
   const handleSelect = async (font: any) => {
   const res = await createFont({
@@ -111,9 +93,9 @@ export default function ExplorePage() {
       <div className="pagination">
 
         {/* 이전 그룹 이동 버튼 */}
-        {currentGroup > 1 && (
+        {hasPrevGroup && (
           <button 
-          onClick={() => setPage(startPage - groupSize)}
+          onClick={goPrevGroup}
           className="arrow"
           >
             &lt;
@@ -132,8 +114,8 @@ export default function ExplorePage() {
         ))}
 
         {/* 다음 그룹 이동 버튼 */}
-        {endPage < totalPages && (
-          <button onClick={() => setPage(endPage + 1)}
+        {hasNextGroup && (
+          <button onClick={goNextGroup}
           className="arrow">
             &gt;
           </button>
