@@ -4,6 +4,7 @@ import Logo from '../imgs/FontLabLogo.png';
 import { NavLogout,NavLogin } from "../arrays/NavArrays";
 import useCustomhook from "../hooks/useCustomhook";
 import { useEffect } from "react";
+import useAuthForm from "../hooks/useAuthForm";
 
 export default function BasicHeader({user}:any){
 
@@ -11,7 +12,8 @@ export default function BasicHeader({user}:any){
     const isLoggedIn = user ? NavLogin : NavLogout;
 
     // 로그아웃기능,useLocation,상태값 가져오기
-    const { handleLogout,loc, } = useCustomhook();
+    const { loc } = useCustomhook();
+    const { handleLogout } = useAuthForm();
 
     useEffect(() => {
         console.log()
@@ -34,6 +36,7 @@ export default function BasicHeader({user}:any){
                             (loc.pathname === "/user/edit" ||
                             loc.pathname === "/user/favorite"));
                             
+
                             if(title.text === "LOGOUT"){
                                 return(
                                     <li key={title.text}>
