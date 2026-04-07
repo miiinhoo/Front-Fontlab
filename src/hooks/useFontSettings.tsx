@@ -1,6 +1,6 @@
 import { defaultUnitValue, unitRanges } from "../arrays/SettingsConfig";
 
-export default function useFontSettings(item: any, setItem: any) {
+export default function useFontSettings(_item: any, setItem: any) {
 
   // 단위 변경 + 값 초기화
   const changeUnit = (key: string, unit: string) => {
