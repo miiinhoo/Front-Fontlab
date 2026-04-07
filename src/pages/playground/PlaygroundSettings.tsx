@@ -14,7 +14,7 @@ function buildGoogleFontUrl(family: string, weight: number, style: string) {
   // 예: "Noto Sans" => "Noto+Sans"
   const familyParam = family.replace(/ /g, "+");
   const isItalic = style === "italic" || style === "oblique";
-  // ital,wght 축 사용 (구글폰트 v2 API 방식)
+  // ital,wght 사용
   const axis = isItalic ? `ital,wght@1,${weight}` : `wght@${weight}`;
   return `https://fonts.googleapis.com/css2?family=${familyParam}:${axis}&display=swap`;
 }
@@ -209,7 +209,7 @@ export default function PlaygroundSettings() {
             {SettingBlocks.map((block) => {
               const key = block.key;
               const unit = item[key + "Unit"] || "px";
-              const range = block.range ?? unitRanges[key][unit];
+              const range = block.range ?? (unitRanges as any)[key][unit];
 
               return (
                 <div key={key} className="setting-block">
