@@ -2,12 +2,16 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { login, logout, signup } from "../api/FirebaseAPI";
 import { useLocation, useNavigate } from "react-router-dom";
+import { auth } from "../firebase/firebase";
 
 export default function useAuthForm(){
 
     const loc = useLocation();
 
     const navigate = useNavigate();
+
+    const user = auth.currentUser;
+    const username = auth.currentUser?.displayName;
 
     // 유저페이지
     const [userData, setUserData] = useState({
@@ -113,6 +117,8 @@ export default function useAuthForm(){
         }
       }
     return{
+        user,
+        username,
         // 유저 정보 기본값 반환
         userData,
         setUserData,

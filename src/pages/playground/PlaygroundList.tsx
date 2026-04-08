@@ -5,6 +5,7 @@ import useGoogleFonts from "../../hooks/useGoogleFonts";
 import SelectComponent from "../../components/SelectComponent";
 import { FONT_FILTER_OPTIONS } from "../../arrays/FilterArrays";
 import { auth } from "../../firebase/firebase";
+import useAuthForm from "../../hooks/useAuthForm";
 
 export default function PlaygroundList() {
   const { item, setItem, navigate } = useCustomhook();
@@ -12,8 +13,7 @@ export default function PlaygroundList() {
 
   const [loading, setLoading] = useState(true);
 
-  const username = auth.currentUser?.displayName;
-  const user = auth.currentUser;
+  const { user, username } = useAuthForm();
 
   useEffect(() => {
     if (!user) {

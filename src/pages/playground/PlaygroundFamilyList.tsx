@@ -8,6 +8,7 @@ import { FONT_FILTER_OPTIONS } from "../../arrays/FilterArrays";
 import { auth } from "../../firebase/firebase";
 import toast from "react-hot-toast";
 import ButtonComponent from "../../components/common/ButtonComponent";
+import useAuthForm from "../../hooks/useAuthForm";
 
 export default function PlaygroundFamilyList() {
   const { item, setItem, navigate } = useCustomhook();
@@ -17,8 +18,7 @@ export default function PlaygroundFamilyList() {
   const [loading, setLoading] = useState(true);
   const [sortByClick, setSortByClick] = useState<boolean>(false);
 
-  const username = auth.currentUser?.displayName;
-  const user = auth.currentUser;
+  const { user, username } = useAuthForm();
 
   const handleSortChange = (mode: "default" | "favorite") => {
     const isFavorite = mode === "favorite";
