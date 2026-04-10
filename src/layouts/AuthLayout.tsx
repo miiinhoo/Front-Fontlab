@@ -8,7 +8,7 @@ export default function AuthLayout(){
         <div className="auth-layout">
             <div className="auth-container">
                 <div className="auth-header">
-                    <Link to="/explore">
+                    <Link to="/">
                         <img src={MainLogo} alt="페이지 메인로고"
                         className="auth-mainlogo"/>
                     </Link>

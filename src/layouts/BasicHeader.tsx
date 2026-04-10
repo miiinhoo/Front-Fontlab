@@ -21,7 +21,7 @@ export default function BasicHeader({user}:any){
     return(
         <div className="header-inner">
                 <h1>
-                    <Link to = "/explore">
+                    <Link to = "/">
                         <img src={Logo}/>
                     </Link>
                 </h1>

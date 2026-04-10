@@ -99,7 +99,6 @@ export default function PlaygroundFamilyList() {
   };
 
   return (
-    // 분리
     <section>
       <div className="page-inner">
         <div className="list-header">

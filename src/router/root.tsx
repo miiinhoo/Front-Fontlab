@@ -5,6 +5,7 @@ import UserRouter from "./user/UserRouter";
 import RouterGuard from "./guard/RouterGuard";
 import AuthLayout from "../layouts/AuthLayout";
 
+const MainPage = lazy(() => import("../pages/MainPage"));
 const ExplorePage = lazy(() => import("../pages/explore/ExplorePage"));
 const PlaygroundPage = lazy(() => import("../pages/playground/PlaygroundPage"));
 const PlaygroundList = lazy(() => import("../pages/playground/PlaygroundList"));
@@ -19,7 +20,7 @@ const root = createBrowserRouter([
         children:[
             {
                 index:true,
-                element: <Navigate replace to ="/explore"/>
+                element: <MainPage/>
             },
             {
                 path:"explore",
