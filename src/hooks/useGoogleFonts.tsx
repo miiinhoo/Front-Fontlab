@@ -43,6 +43,6 @@ export default function useGoogleFonts() {
     setSearch,
     category,
     setCategory,
-    
+    API_KEY
   };
 }
