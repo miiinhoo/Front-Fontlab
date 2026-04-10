@@ -10,7 +10,7 @@
   --black:#000;
   --subColor:#333;
   --subColor2:#555;
-  --blue:#4361EE;
+  --blue:#3c59db;
 }
 a{
   color: inherit;
@@ -150,6 +150,144 @@ section{
       font-size: 1.2rem; // 부제는 살짝 작게
       color: var(--subColor2);
     }
+  }
+  .main-container{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    height: 100%;
+    margin: 0 auto;
+  .font-main{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    flex: 1;
+    width:100%;
+    .font-items{
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      gap: 0.6rem;
+      width: calc(50% - 1rem);
+      height: calc(100% / 3 - 1rem);
+      padding: 0 2rem;
+      box-sizing: border-box;
+      background-color: var(--white);
+      border: 1px solid rgba(211, 211, 211, 0.301);
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+      h2{
+        height: 40%;
+        font-size: 1.7rem;
+        line-height:50px;
+      }
+      input{
+        width: 100%;
+        font-size: 1.2rem;
+        padding: 0.4rem 0;
+        box-sizing: border-box;
+        border-radius: 5px;
+        border: 1px solid lightgray;
+        text-indent: 1.5rem;
+        &:focus{
+          outline: none;
+        }
+      }
+    }
+  }
+  // 메인페이지 실시간 인기 폰트 (네이버 롤링 스타일)
+  .popular-fonts {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 0;
+    padding: 0 1rem;
+
+    .search-container {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border: 2px solid #000;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      width: 350px;
+      box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+
+      .search-label {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-right: 1rem;
+        color: var(--blue);
+        white-space: nowrap;
+      }
+
+      .ticker-wrap {
+        height: 24px;
+        overflow: hidden;
+        flex: 1;
+        position: relative;
+
+        .loading-text {
+          font-size: 1.1rem;
+          color: var(--solidgray);
+          line-height: 24px;
+        }
+
+        .ticker-list {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+          animation: rolling 15s infinite;
+
+          li {
+            height: 24px;
+            line-height: 24px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-align: left;
+
+            .rank {
+              font-weight: bold;
+              font-size: 1.1rem;
+              width: 15px;
+              text-align: center;
+            }
+
+            .font-name {
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+    }
+
+    .font-category {
+      display: flex;
+      .fontbtn{
+        width: 5rem;
+        font-size: 0.85rem;
+        padding: 0.5rem;
+        border-radius: 0;
+        border: 1px solid var(--lightgray);
+        &.active{
+          background-color: var(--blue);
+          color: #fff;
+        }
+      }
+    }
+  }
+  }
+
+  @keyframes rolling {
+    0%, 15%   { transform: translateY(0); }
+    20%, 35%  { transform: translateY(-24px); }
+    40%, 55%  { transform: translateY(-48px); }
+    60%, 75%  { transform: translateY(-72px); }
+    80%, 95%  { transform: translateY(-96px); }
+    100%      { transform: translateY(-120px); }
   }
 
   // 검색 / 드롭다운 메뉴
