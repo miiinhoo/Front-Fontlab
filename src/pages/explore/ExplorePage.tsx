@@ -1,7 +1,6 @@
 import useGoogleFonts from "../../hooks/useGoogleFonts";
 import FontCard from "../../components/FontCard";
 import useCustomhook from "../../hooks/useCustomhook";
-import { createFont } from "../../api/fontsService";
 import FontCardSkeleton from "../../components/skeleton/FontCardSkeleton";
 import SelectComponent from "../../components/SelectComponent";
 import { FONT_FILTER_OPTIONS } from "../../arrays/FilterArrays";
@@ -10,7 +9,7 @@ import usePagination from "../../hooks/usePagination";
 export default function ExplorePage() {
   // 훅으로 필터된 폰트 가져오기
   const { fonts, search, setSearch, category, setCategory,loading } = useGoogleFonts();
-  const { navigate,handleChange, tempA } = useCustomhook();
+  const { handleChange, tempA, handleSelect } = useCustomhook();
   const PER_PAGE = 50;
 
   const {
@@ -23,22 +22,6 @@ export default function ExplorePage() {
     goNextGroup,
     setPage,
   } = usePagination(fonts, PER_PAGE, 9);
-
-  const handleSelect = async (font: any) => {
-  const res = await createFont({
-    family: font.family,
-    text: "",
-    size: 32,
-    weight: 400,
-    style: "normal",
-    spacing: 0,
-    height: 1.5,
-    createdAt: Date.now(),
-  });
-
-  // 저장 성공 > settings로 이동
-  navigate(`/playground/settings/${res.id}`);
-  };
 
   
   return (
