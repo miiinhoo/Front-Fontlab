@@ -3,6 +3,8 @@ import ButtonComponent from "../components/common/ButtonComponent";
 import { FontMap } from "../arrays/FontArrays";
 import { loadFontOnce } from "../utils/loadFontOnce";
 import useGoogleFonts from "../hooks/useGoogleFonts";
+import arrow from "../imgs/arrow.svg";
+import useCustomhook from "../hooks/useCustomhook";
 
 // 카테고리 필터
 type Category = "serif" | "sans" | "display";
@@ -10,6 +12,8 @@ type Category = "serif" | "sans" | "display";
 export default function MainPage(){
 
     const { API_KEY } = useGoogleFonts();
+    const { bool, setBool, handleSelect } = useCustomhook();
+    // serif/sans/display 필터
     const [ category , setCategory ] = useState<Category>("sans");
     const [ preview, setPreview ] = useState<Record<string, string>>({});
     const [ popularFonts, setPopularFonts ] = useState<string[]>([]);
@@ -38,7 +42,7 @@ export default function MainPage(){
         <div className="page-inner">
             <div className="main-container">
             <h2>
-                당신의 웹 프로젝트를 위한 <span style={{ color : "#4361EE"}}>폰트 실험실, FontLab.</span>
+                당신의 프로젝트를 위한 <span style={{ color : "#4361EE"}}>폰트 실험실, FontLab.</span>
             </h2>
             <p>
                 <small>
@@ -48,20 +52,38 @@ export default function MainPage(){
             <div className="popular-fonts">
                 <div className="search-container">
                     <span className="search-label">실시간 인기 폰트</span>
-                    <div className="ticker-wrap">
+                    <div className="ticker-wrap" onClick={() => setBool(!bool)} style={{ cursor: "pointer" }}>
                         {popularFonts.length > 0 ? (
                             <ul className="ticker-list">
                                 {/* 자연스러운 무한 롤링을 위해 첫 번째 요소를 복제해서 마지막에 추가 */}
                                 {[...popularFonts, popularFonts[0]].map((font, idx) => (
                                     <li key={idx}>
                                         <span className="rank">{idx === 5 ? 1 : idx + 1}</span>
-                                        <span className="font-name" style={{ fontFamily: `"${font}"` }}>{font}</span>
+                                        <p className="font-name" 
+                                        onClick={() => { handleSelect(font); }}
+                                        style={{ fontFamily: `"${font}"` }}>{font}
+                                        </p>
                                     </li>
                                 ))}
                             </ul>
                         ) : (
                             <span className="loading-text">로딩 중...</span>
                         )}
+                        <span className={"down-arrow" + (bool ? " active" : "")}>
+                            <img src={arrow} alt="드롭다운 이미지" className="drop-down-img"/>
+                        </span>
+                    </div>
+                    <div className={"dropdown-container" + (bool ? " active" : "")}>
+                        <ul className="dropdown-box">
+                            {popularFonts.map((f, idx) => (
+                                <li key={f} 
+                                onClick={() => { handleSelect(f); }}
+                                style={{ fontFamily: `"${f}"` }}>
+                                    <span style={{ marginRight: "12px", fontWeight: "bold", opacity: 0.5 }}>{idx + 1}</span>
+                                    {f}
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 </div>
 
@@ -84,7 +106,7 @@ export default function MainPage(){
             <div className="font-main">
                 {
                     FontMap[category].map(font => (
-                        <div key={font} className="font-items">
+                        <div key={font} className="font-items" onClick={() => handleSelect(font)} style={{ cursor: "pointer" }}>
                             <h2 style={{ fontFamily: `"${font}", ${category === "sans" ? "sans-serif" : "serif"}` }}>
                                 {font}
                             </h2>
@@ -92,6 +114,7 @@ export default function MainPage(){
                             value={preview[font] || ""}
                             style={{ fontFamily: `"${font}"${category === "sans" ? ", sans-serif" : ""}` }}
                             placeholder="여기에 텍스트를 입력해보세요.."
+                            onClick={(e) => e.stopPropagation()}
                             onChange={(e) => {
                                 setPreview(prev => ({
                                     ...prev,

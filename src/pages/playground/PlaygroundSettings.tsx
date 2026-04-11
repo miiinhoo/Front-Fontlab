@@ -3,26 +3,17 @@
 import { useEffect, useState } from "react";
 import useCustomhook from "../../hooks/useCustomhook";
 import { getFont } from "../../api/fontsService";
-import { loadFontOnce } from "../../utils/loadFontOnce";
+import { loadFontOnce, getGoogleFontUrl } from "../../utils/loadFontOnce";
 
 import useFontSettings from "../../hooks/useFontSettings";
 import { SettingBlocks, unitRanges } from "../../arrays/SettingsConfig";
 import ButtonComponent from "../../components/common/ButtonComponent";
 import toast from "react-hot-toast";
 
-function buildGoogleFontUrl(family: string, weight: number, style: string) {
-  // 예: "Noto Sans" => "Noto+Sans"
-  const familyParam = family.replace(/ /g, "+");
-  const isItalic = style === "italic" || style === "oblique";
-  // ital,wght 사용
-  const axis = isItalic ? `ital,wght@1,${weight}` : `wght@${weight}`;
-  return `https://fonts.googleapis.com/css2?family=${familyParam}:${axis}&display=swap`;
-}
-
 type EmbedType = "import" | "link";
 
 export default function PlaygroundSettings() {
-  const { id, item, setItem, handleSave, handleDelete, navigate } = useCustomhook();
+  const { id, item, setItem, handleSave, handleDelete, navigate, loc } = useCustomhook();
   const { changeUnit, changeValue, changePreset } =
     useFontSettings(item, setItem);
 
@@ -43,6 +34,26 @@ export default function PlaygroundSettings() {
   useEffect(() => {
     if (!id) return;
 
+    // 미리보기인 경우
+    if (id === "preview") {
+      const searchParams = new URLSearchParams(loc.search);
+      const family = searchParams.get("family") || "Roboto";
+
+      setItem({
+        family: family,
+        text: "FontLab Preview",
+        size: 32,
+        sizeUnit: "px",
+        weight: 400,
+        style: "normal",
+        spacing: 0,
+        spacingUnit: "px",
+        height: 1.5,
+      });
+      return;
+    }
+
+    // 실제 데이터 조회 경우
     getFont(id).then((res) => {
       setItem({
         ...res,
@@ -53,12 +64,14 @@ export default function PlaygroundSettings() {
 
   
     });
-  }, [id]);
+  }, [id, loc.search]);
 
   if (!item) return <div>Loading...</div>;
 
+  const isPreview = id === "preview";
+
    // 임베드 코드 문자열 생성
-  const fontUrl = buildGoogleFontUrl(item.family, item.weight, item.style);
+  const fontUrl = getGoogleFontUrl(item.family, item.weight, item.style === "italic");
   const embedCode =
     embedType === "import"
       ? `@import url('${fontUrl}');`
@@ -190,15 +203,17 @@ export default function PlaygroundSettings() {
         <div className="right-content">
           <div className="btn-row">
             <ButtonComponent 
-              text="저장"
+              text={isPreview ? "컬렉션에 저장" : "업데이트"}
               event={handleSave}
               cln="savebtn"
             />
-            <ButtonComponent
-              text="삭제"
-              event={handleDelete}
-              cln="delbtn"
-            />
+            {!isPreview && (
+              <ButtonComponent
+                text="삭제"
+                event={handleDelete}
+                cln="delbtn"
+              />
+            )}
             <ButtonComponent
               text="리스트"
               event={() => navigate(`/playground/list/${encodeURIComponent(item.family)}`)}

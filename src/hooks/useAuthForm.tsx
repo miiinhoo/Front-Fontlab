@@ -109,7 +109,7 @@ export default function useAuthForm(){
           if(!cf) return;
   
           await logout();
-          navigate("/explore");
+          navigate("/");
           
           toast.success("로그아웃 완료되었습니다.");
         }catch(err:any){

@@ -8,6 +8,11 @@ export default function RouterGuard({children}:any){
     const user = AuthStore(state => state.user);
     const { loc } = useCustomhook();
 
+    // 미리보기 모드인 경우에는 로그인이 없어도 허용
+    if (loc.pathname.includes("/playground/settings/preview")) {
+      return children;
+    }
+
     if (!user) {
         return (
             <Navigate
