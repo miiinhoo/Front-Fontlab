@@ -228,9 +228,15 @@ export default function PlaygroundSettings() {
 
               return (
                 <div key={key} className="setting-block">
-                  <label>
-                    {block.label}: {item[key]}
-                    {block.unit ? unit : ""}
+                  <label className="block-text-wrapper">
+                    <span className="block-text">
+                      {block.label}
+                    </span>
+                    <span className="block-text">
+                      {item[key]}{block.unit ? unit : ""} 
+                    </span>
+                    
+                    
                   </label>
 
                   {(block.type === "slider" || block.type === "slider-preset") && (
@@ -248,13 +254,13 @@ export default function PlaygroundSettings() {
                   {block.unit && (
                     <div className="unit-row">
                       {["px", "rem", "em"].map((u) => (
-                        <label key={u}>
+                        <label key={u} className="unit-btn">
                           <input
                             type="radio"
                             checked={unit === u}
                             onChange={() => changeUnit(key, u)}
                           />
-                          {u}
+                          <span>{u}</span>
                         </label>
                       ))}
                     </div>
@@ -263,13 +269,13 @@ export default function PlaygroundSettings() {
                   {block.type === "slider-preset" && (
                     <div className="unit-row">
                       {block.presets?.map((p: any) => (
-                        <label key={p.value}>
+                        <label key={p.value} className="unit-btn">
                           <input
                             type="radio"
                             checked={item[key] === p.value}
                             onChange={() => changePreset(key, p.value)}
                           />
-                          {p.label}
+                          <span>{p.label}</span>
                         </label>
                       ))}
                     </div>
@@ -278,13 +284,13 @@ export default function PlaygroundSettings() {
                   {block.type === "preset" && block.presets && (
                     <div className="unit-row">
                       {block.presets.map((p) => (
-                        <label key={p.value}>
+                        <label key={p.value} className="unit-btn">
                           <input
                             type="radio"
                             checked={item[key] === p.value}
                             onChange={() => changePreset(key, p.value)}
                           />
-                          {p.label}
+                          <span>{p.label}</span>
                         </label>
                       ))}
                     </div>

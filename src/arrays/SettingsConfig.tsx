@@ -45,26 +45,26 @@ export const fontStyles = [
 export const SettingBlocks = [
   {
     key: "size",
-    label: "크기",
+    label: "Font Size",
     type: "slider",         // 슬라이더 + 단위
     unit: true,
   },
   {
     key: "weight",
-    label: "굵기",
+    label: "Font Weight",
     type: "slider-preset",  // 슬라이더 + preset
     presets: weightPresets,
     range: { min: 100, max: 900, step: 50 }, // 범위값 100~900까지 100씩 증/감
   },
   {
     key: "style",
-    label: "스타일",
+    label: "Font Style",
     type: "preset",         // preset
     presets: fontStyles,
   },
   {
     key: "spacing",
-    label: "간격",
+    label: "Letter Spacing",
     type: "slider",         // 슬라이더 + 단위
     unit: true,
   },
