@@ -103,7 +103,7 @@ export default function PlaygroundFamilyList() {
       <div className="page-inner">
         <div className="list-header">
           <h2>
-            {username ? `${username}님의 ` : ""}
+            <span style={{ color: "#3c59db" }}>{username ? <span>{username}</span> : ""}</span>님의&nbsp;
             {decodedFamily} 프리셋 리스트
           </h2>
           <p className="list-subtext">
