@@ -78,7 +78,7 @@ export default function PlaygroundList() {
     <section>
       <div className="page-inner">
         <div className="list-header">
-          <h2>{username ? `${username}님의` : ""} 폰트 리스트</h2>
+          <h2><span style={{ color: "#3c59db" }}>{username ? <>{username}</> : ""}</span>님의 폰트 리스트</h2>
           <p className="list-subtext">
             프리셋이 하나라도 있는 폰트만 보여줍니다, explore에서 폰트를 생성해보세요.
           </p>
