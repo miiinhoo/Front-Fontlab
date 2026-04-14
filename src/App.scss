@@ -85,6 +85,10 @@ header{
 
       a {
         position: relative;
+        transition: all 0.6s 0s ease-in-out;
+        &.on{
+          color: var(--blue);
+        }
       }
 
       a::after,a.on::after{
@@ -92,7 +96,7 @@ header{
         display: block;
         width: 10px;
         height: 10px;
-        background-color: #000;
+        background-color: var(--blue);
         border-radius: 50%;
         position: absolute;
         top:0;right: -11.5px;
@@ -388,14 +392,16 @@ section{
 
       
       select {
-        font-size: 2rem;
+        font-size: 1.45rem;
+        padding: 0.5rem 0;
       }
 
       input {
-        font-size: 2rem;
+        font-size: 1.45rem;
         text-indent: 18px;
         border: 1px solid;
         border-radius: 8px;
+        padding: 0.5rem 0;
       }
 
     }
@@ -415,7 +421,7 @@ section{
       align-items: center;
     }
     .right-box > input,select{
-      font-size: 2rem;
+      font-size: 1.45rem;
       border: 1px solid;
 
       border-radius: 8px;
@@ -589,7 +595,7 @@ section{
       display: flex;
       flex-direction: column;
       gap: 10px;
-      width: 80%;
+      width: 70%;
       border: 1px solid rgb(180, 180, 180);
       padding: 2rem;
       .setting-block{ 
@@ -668,6 +674,11 @@ section{
         font-size : 20px;
         overflow: hidden;
         transition: all 0.2s linear;
+        &.customname{
+          padding: 0.7rem 0;
+          border-radius: 8px;
+          text-indent: 15px;
+        }
         &[type="range"]{
           -webkit-appearance: none;
           outline: 1px solid lightgray;
@@ -748,6 +759,8 @@ section{
       flex: 1;
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      align-items: center;
       gap: 16px;
 
       .btn-row{
@@ -800,7 +813,7 @@ section{
   }
 }
 .pagination.active{
-  background-color: black;
+  background-color: var(--blue);
   color: white;
 }
 .arrow{
