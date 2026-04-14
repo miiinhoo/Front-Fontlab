@@ -14,7 +14,6 @@ export default function FontCard({ font,tempA,click }:Props) {
 
   useEffect(() => {
     loadFontOnce(font.family);
-    //loadFontOnce(font.family, ["400"]);
   }, [font.family]);
 
   
@@ -36,9 +35,5 @@ export default function FontCard({ font,tempA,click }:Props) {
       </div>
      
     </div>
-    
-      
-      
-    
   )
 }
