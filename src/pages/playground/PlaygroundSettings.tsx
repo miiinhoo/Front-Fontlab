@@ -94,7 +94,7 @@ export default function PlaygroundSettings() {
           <div className="settings-header">
             <h2>{item.family}</h2>
             {item.customname && (
-              <p className="preset-name">별칭: {item.customname}</p>
+              <p className="preset-name">{item.customname}</p>
             )}
           </div>
 
