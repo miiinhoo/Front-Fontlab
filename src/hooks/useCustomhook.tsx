@@ -44,7 +44,6 @@ export default function useCustomhook(){
         }
       }
 
-      // 2. 일반적인 수정 모드
       try{
         await updateFont(id!, item);
         toast.success(`저장에 성공하였습니다.`);

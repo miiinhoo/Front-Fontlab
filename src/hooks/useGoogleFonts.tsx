@@ -8,6 +8,7 @@ export default function useGoogleFonts() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
 
+  // api에서 받은 데이터를 json으로 변환하는 과정
   useEffect(() => {
     fetch(
       `https://www.googleapis.com/webfonts/v1/webfonts?key=${API_KEY}`
@@ -19,13 +20,11 @@ export default function useGoogleFonts() {
       });
   }, []);
 
-  // 이름 검색 + 카테고리(일반/한글지원) 필터
+  // 카테고리
   const filteredFonts = fonts
-    // 1) 폰트 이름 검색
     .filter((f) =>
       f.family.toLowerCase().includes(search.toLowerCase())
     )
-    // 2) 카테고리 필터
     .filter((f) => {
       if (category === "all") return true;
       if (category === "ko") {

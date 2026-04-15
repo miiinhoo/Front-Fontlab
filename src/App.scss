@@ -1,6 +1,9 @@
+@use "sass:list";
+
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
 
 *{
   margin: 0;padding: 0;
@@ -775,16 +778,16 @@ section{
           $colorlist:(var(--blue),rgba(179, 19, 19, 0.9), rgb(10, 102, 10,0.9));
           $clslist:("savebtn","delbtn","");
           // 각 버튼마다 hover 이벤트를 적용하는 for문
-          @for $i from 1 through length($colorlist){
-            $cls: nth($clslist, $i);
+          @for $i from 1 through list.length($colorlist){
+            $cls: list.nth($clslist, $i);
             @if $cls != "" {
               &.#{$cls}:hover {
-                background-color: nth($colorlist, $i);
+                background-color: list.nth($colorlist, $i);
                 color: white;
               }
             } @else {
               &:hover {
-                background-color: nth($colorlist, $i);
+                background-color: list.nth($colorlist, $i);
                 color: white;
               }
             }
