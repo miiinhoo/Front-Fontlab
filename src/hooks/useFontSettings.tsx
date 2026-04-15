@@ -23,7 +23,7 @@ export default function useFontSettings(_item: any, setItem: any) {
     const rangeKey = key as keyof typeof unitRanges;
 
     if (!unitRanges[rangeKey]) {
-      // 크기(size) 외에 spacing/height는 공통 range 쓰는 경우
+      // 크기 외에 spacing/height는 공통 range 쓰는 경우
       return { min: 1, max: 120, step: 1 };
     }
 
