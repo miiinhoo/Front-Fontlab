@@ -66,6 +66,7 @@ export default function PlaygroundSettings() {
     });
   }, [id, loc.search]);
 
+
   if (!item) return <div>Loading...</div>;
 
   const isPreview = id === "preview";
