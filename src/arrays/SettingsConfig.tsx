@@ -19,6 +19,7 @@ export const unitRanges = {
   weight: {
     min: 100,max:900, step:100
   },
+  style:{},
   spacing: {
     px: { min: -10, max: 50, step: 0.1 },
     rem: { min: -1, max: 5, step: 0.01 },
